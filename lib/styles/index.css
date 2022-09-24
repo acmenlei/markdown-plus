@@ -1,0 +1,49 @@
+* {
+  box-sizing: border-box;
+}
+
+h1,h2 {
+  border-bottom: 2px solid #eee;
+  padding-bottom: 5px;
+}
+
+pre {
+  background-color: black;
+  color: white;
+  padding: 2px 10px 2px 10px;
+  border-radius: 5px;
+  position: relative;
+  font-size: 1rem;
+}
+
+pre code {
+  margin-left: 28px;
+}
+
+pre p span {
+  text-align: center;
+  user-select: none;
+  display: inline-block;
+  background: #333;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  line-height: 100%;
+  /* border-bottom: 1px solid #ccc; */
+  color: skyblue;
+  margin: 0 auto;
+}
+
+pre::before {
+  content: "";
+  display: block;
+  width: 1.8rem;
+  background: #333;
+  position: absolute;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  border-radius: 5px;
+  border-right: 1px solid #555;
+}
