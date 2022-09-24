@@ -9,7 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": ["markdown-parser", "markdown-transform", "markdown-html", "code-line-number"],
   "author": "",
   "license": "ISC"
 }
