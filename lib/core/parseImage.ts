@@ -1,3 +1,3 @@
-export function processImage() {
+export function parseImage() {
   return `<img alt=${RegExp.$1} src=${RegExp.$2} />`;
 }

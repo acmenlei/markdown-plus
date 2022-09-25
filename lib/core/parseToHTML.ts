@@ -1,9 +1,9 @@
 import { matchTitle } from './../../utils/index';
-import { processBlock } from "./parseBlock";
-import { processLineCode, processCodePre } from "./parseCode";
+import { parseBlock } from "./parseBlock";
+import { parseLineCode, parseCodePre } from "./parseCode";
 import { parseNoOrderList } from "./parseNoOrderList";
-import { processImage } from "./parseImage";
-import { processSuperLink } from "./parseSuperLink";
+import { parseImage } from "./parseImage";
+import { parseSuperLink } from "./parseSuperLink";
 import { parseOrderList } from "./parseOrderList"
 import { parseNormalText } from "./parseText";
 import { getTitleLevel } from "./parseTitle";
@@ -38,22 +38,22 @@ export default function markdownToHTML(template: string) {
       templateStr += result;
     } else if (isPreCode(templates[i])) {
       // 代码块
-      const { result, startIdx } = processCodePre(templates, i, len);
+      const { result, startIdx } = parseCodePre(templates, i, len);
       i = startIdx;
       templateStr += result;
     } else if (isSuperLink(templates[i])) {
       // 说明为超链接
-      templateStr += processSuperLink();
+      templateStr += parseSuperLink();
     } else if (isImage(templates[i])) {
       // 说明为图片
-      templateStr += processImage();
+      templateStr += parseImage();
     } else if (isBLock(templates[i])) {
       // 说明为代码块
-      templateStr += processBlock(templates[i]);
+      templateStr += parseBlock(templates[i]);
     } else {
       // 处理普通文字
       if (templates[i] = templates[i].trim()) {
-        templateStr += processLineCode(parseNormalText(templates[i]));
+        templateStr += parseLineCode(parseNormalText(templates[i]));
       }
     }
     i++;

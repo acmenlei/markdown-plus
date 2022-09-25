@@ -1,5 +1,7 @@
 import { markdownToHTML } from "../index"
 import  "../lib/styles/index.css";
+// import 
+
 const md = `
 # 我是一级标题
 ## 我是二级标题
@@ -24,14 +26,30 @@ const md = `
   - li14
 
 \`\`\`js
-let text = name;
-function foo() {
-  console.log(text)
+// 注释节点
+# dsad
+/*
+ * dsadsasdasdsa
+ * dsadsasdas
+*/
+let text = new name();
+long long dsd = dsa;
+function foo (name,parser) {
+  console.log.log.log(text)
+}
+
+class Person {
+  constructor() {
+
+  }
+  void name() {
+
+  }
 }
 \`\`\`
 \`\`\`js
-let text = name;
-function foo() {
+new Promise().then()
+function foo(string name, int age) {
   console.log(text)
 }
 \`\`\`

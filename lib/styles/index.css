@@ -2,42 +2,48 @@
   box-sizing: border-box;
 }
 
-h1,h2 {
+h1, h2 {
   border-bottom: 2px solid #eee;
   padding-bottom: 5px;
 }
 
 pre {
-  background-color: black;
+  background-color: #444;
   color: white;
-  padding: 2px 10px 2px 10px;
   border-radius: 5px;
   position: relative;
   font-size: 1rem;
-}
-
-pre code {
-  margin-left: 28px;
+  padding: 0 10px 5px 0;
+  overflow: hidden;
 }
 
 pre p span {
-  text-align: center;
-  user-select: none;
   display: inline-block;
-  background: #333;
-  text-align: center;
-  position: relative;
-  z-index: 2;
-  line-height: 100%;
-  /* border-bottom: 1px solid #ccc; */
-  color: skyblue;
-  margin: 0 auto;
 }
 
+pre p {
+  margin: 0;
+  padding: 4px 4px 4px 45px;
+  position: relative;
+  min-height: 25px;
+}
+
+pre p span.line-number {
+  position: absolute;
+  left: 0px;
+  min-width: 30px;
+  height: 100%;
+  z-index: 2;
+  user-select: none;
+  color: skyblue;
+  text-align: center;
+  padding: 0 4px;
+  background: #333;
+}
 pre::before {
   content: "";
   display: block;
-  width: 1.8rem;
+  width: auto;
   background: #333;
   position: absolute;
   height: 100%;
@@ -46,4 +52,83 @@ pre::before {
   z-index: 1;
   border-radius: 5px;
   border-right: 1px solid #555;
+}
+
+pre::after, pre code::after, pre code::before {
+  content: "";
+  display: block;
+  width: .7rem;
+  height: .7rem;
+  position: absolute;
+  top: 10px;
+  z-index: 1;
+  border-radius: 50%;
+}
+
+pre::after {
+  background: yellow;
+  right: 1.4rem;
+
+}
+
+pre code::after {
+  background: orangered;
+  right: 2.8rem;
+
+}
+
+pre code::before {
+  right: 4.2rem;
+  background: deeppink;
+}
+
+.declare-keyword {
+  color: rgb(233, 73, 159);
+}
+
+.declare-constant-name {
+  color: orangered;
+}
+
+.declare-value {
+  color: #eee;
+}
+
+.declare-method {
+  color: rgb(233, 73, 159);
+  font-weight: bold;
+}
+
+.declare-method-name {
+  color: rgb(87, 145, 231);
+}
+
+.declare-param {
+  color: rgb(147, 175, 48);
+}
+
+.declare-param-type {
+  color: rgb(213, 56, 252);
+}
+
+.declare-method-call {
+  color: rgb(197, 121, 251);
+}
+
+.declare-call-execute, .declare-class-name {
+  color: rgb(216, 216, 13);
+}
+
+.declare-call-execute-value {
+  color: rgb(230, 144, 144);
+  font-weight: bold;
+}
+
+.declare-operator-char, .declare-class {
+  color: rgb(233, 73, 159);
+}
+
+.declare-comments {
+  font-size: .9rem;
+  color: #999;
 }
