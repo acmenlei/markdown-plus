@@ -16,9 +16,7 @@
 
 # 效果
 ### JavaScript语法高亮
-- TODO: 对常规语法高亮，复杂语法暂时未处理
-
-![代码高亮](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8f56b11e22f14013985ebcc84a0bd070~tplv-k3u1fbpfcp-watermark.image?)
+![脚本高亮](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/855befde7c9e4dc09b8e52a07a15ab87~tplv-k3u1fbpfcp-watermark.image?)
 ### HTML语法高亮
 ![HTML解析](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6c2e8256b7c445cb8a1786aca55047f7~tplv-k3u1fbpfcp-watermark.image?)
 ### 其他语法
