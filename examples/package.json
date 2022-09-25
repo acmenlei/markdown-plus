@@ -1,13 +1,13 @@
 {
   "name": "examples",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "main.ts",
   "license": "MIT",
   "scripts": {
     "dev": "vite"
   },
   "dependencies": {
-    "markdown-transform-html": "^1.0.0"
+    "markdown-transform-html": "^1.1.0"
   },
   "devDependencies": {
     "vite": "^3.1.3"

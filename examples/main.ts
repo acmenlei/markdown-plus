@@ -1,4 +1,5 @@
-import { markdownToHTML } from "../index"
+// import { markdownToHTML } from "../index"
+import { markdownToHTML } from "markdown-transform-html"
 import "markdown-transform-html/lib/styles/index.css";
 
 const md = `
@@ -40,7 +41,7 @@ class Person extends People {
 # 单行注释
 \`\`\`
 \`\`\`js
-new Promise().then(err => console.log(err))
+new Promise().then(console.log)
 
 function foo(string name, int age) {
   console.log(text, name, age)
