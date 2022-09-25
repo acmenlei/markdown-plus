@@ -107,7 +107,7 @@ function parseFunctionCall(text: string) {
         let idx = calls[i].indexOf("(");
         callStr += `<span class=declare-call-execute>${calls[i].slice(0, idx)}</span>(<span class=declare-call-execute-value>${RegExp.$1}</span>)${isNeedEndChar(i, n, '.')}`
       } else {
-        callStr += `<span class=declare-method-call>${calls[i]}</span>.`
+        callStr += `<span class=declare-method-call>${calls[i]}</span>${isNeedEndChar(i, n, '.')}`
       }
     }
     return callStr;
@@ -119,7 +119,7 @@ function parseSingleComments(text: string) {
 }
 // 多行注释
 function parseManyLineComents(text: string) {
-  return text.replace(/(\/\*|\*\s+\w+|\*\/)/g, ($, $1) => {
+  return text.replace(/(\/\*|\*\s+.*|\*\/)/g, ($, $1) => {
     return `<span class=declare-comments>${$1}</span>`
   })
 }

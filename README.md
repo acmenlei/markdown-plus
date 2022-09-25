@@ -12,8 +12,15 @@
 </div>
 
 # 介绍
-一款markdown转换器，将markdwon内容转换为html格式，并提供代码行号显示以及代码高亮效果，如果不喜欢本样式，也可以使用highlightjs进行高亮显示，扩展性强。
+一款markdown转换器，将markdwon内容转换为html格式，并提供代码行号显示以及代码高亮效果（支持javascript,html,java,c等语言），如果不喜欢本样式，也可以使用highlightjs进行高亮显示，扩展性强。
 
+# 效果
+### JavaScript语法高亮
+![代码高亮](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1bc329f106d540ca8a8891023f7faa17~tplv-k3u1fbpfcp-watermark.image?)
+### HTML语法高亮
+![HTML解析](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6c2e8256b7c445cb8a1786aca55047f7~tplv-k3u1fbpfcp-watermark.image?)
+### 其他语法
+其他语法可以自己尝试...
 # 使用
 - 安装
 ```shell
@@ -63,8 +70,7 @@ const md = `
 // 注释节点
 # dsad
 /*
- * dsadsasdasdsa
- * dsadsasdas
+ * 多行注释节点
  */
 let text = new name();
 function *foo (name,parser) {

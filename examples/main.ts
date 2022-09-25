@@ -1,4 +1,4 @@
-import { markdownToHTML } from "markdown-transform-html"
+import { markdownToHTML } from "../index"
 import "markdown-transform-html/lib/styles/index.css";
 
 const md = `
@@ -25,27 +25,22 @@ const md = `
   - li14
 
 \`\`\`js
-// 注释节点
-# dsad
+// 单行注释
 /*
- * dsadsasdasdsa
- * dsadsasdas
+ * 多行注释节点
  */
 let text = new name();
 function *foo (name,parser) {
   console.log(text)
 }
-
 class Person extends People {
   constructor() {
-
   }
 }
-
-
+# 单行注释
 \`\`\`
 \`\`\`js
-new Promise().then()
+new Promise().then(err => console.log(err))
 
 function foo(string name, int age) {
   console.log(text, name, age)
@@ -61,7 +56,6 @@ const bbb = "2000";
 > 注释语句
 
 \`\`\`html
-<text id="name" age="18">我是html</text>
 <!DOCTYPE html>
 <html lang="en">
 <head>
