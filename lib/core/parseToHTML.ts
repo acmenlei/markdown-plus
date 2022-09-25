@@ -1,6 +1,6 @@
 import { matchTitle } from './../../utils/index';
 import { parseBlock } from "./parseBlock";
-import { parseLineCode, parseCodePre } from "./parseCode";
+import { parseSingleLineCode, parseCodePre } from "./parseCode";
 import { parseNoOrderList } from "./parseNoOrderList";
 import { parseImage } from "./parseImage";
 import { parseSuperLink } from "./parseSuperLink";
@@ -53,7 +53,7 @@ export default function markdownToHTML(template: string) {
     } else {
       // 处理普通文字
       if (templates[i] = templates[i].trim()) {
-        templateStr += parseLineCode(parseNormalText(templates[i]));
+        templateStr += parseSingleLineCode(parseNormalText(templates[i]));
       }
     }
     i++;

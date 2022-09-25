@@ -34,11 +34,11 @@ const md = `
 */
 let text = new name();
 long long dsd = dsa;
-function foo (name,parser) {
-  console.log.log.log(text)
+function *foo (name,parser) {
+  console.log(text)
 }
 
-class Person {
+class Person implements dsadas extends sname {
   constructor() {
 
   }
@@ -46,14 +46,33 @@ class Person {
 
   }
 }
+
+import { name } from "../dsads";
+
 \`\`\`
 \`\`\`js
 new Promise().then()
 function foo(string name, int age) {
-  console.log(text)
+  console.log(text, name, age)
 }
+
+export default {
+  name: "dsasds",
+  age: 18
+}
+
+const bbb = "2000";
 \`\`\`
 > 这是一条注释dsadsadsad
+
+\`\`\`html
+<text id="name"    age="18">我是html</text>
+<script>
+function name() {
+
+}
+</script>
+\`\`\`
 
 ![一朵花](https://img1.baidu.com/it/u=4260946381,835108024&fm=253&app=138&size=w931&n=0&f=JPEG&fmt=auto?sec=1664125200&t=22f4f6189388e98416c9f814dc3910ec)
 [百度](www.baidu.com)
