@@ -10,10 +10,10 @@ export function parseHTMLSyntax(syntax: string, line: number) {
     // 处理标签都在同一行的情况
     let attrs = RegExp.$3.trim().split(" "), result = processAttrs(attrs);
     return `${genPrefixer(line)}${RegExp.$1}&lt<span class=declare-html-tag>${RegExp.$2}</span>${result && '&nbsp;' + result}&gt${RegExp.$4}&lt/<span class=declare-html-tag>${RegExp.$2}</span>&gt</p>`
-  } else if (/(\s*)<(\w+)(.*)(\/?)>/g.test(syntax)) {
+  } else if (/(\s*)<(\w+)(.*)>/g.test(syntax)) {
     // 处理只有开标签的情况
     let attrs = RegExp.$3.trim().split(" "), result = processAttrs(attrs);
-    return `${genPrefixer(line)}${RegExp.$1}&lt<span class=declare-html-tag>${RegExp.$2}</span>${result && '&nbsp;' + result}${RegExp.$3}&gt</p>`
+    return `${genPrefixer(line)}${RegExp.$1}&lt<span class=declare-html-tag>${RegExp.$2}</span>${result && '&nbsp;' + result}&gt</p>`
   } else if (/(\s*)<\/(\w+)>/g.test(syntax)) {
     // 处理只有闭标签的情况
     return `${genPrefixer(line)}${RegExp.$1}&lt/<span class=declare-html-tag>${RegExp.$2}</span>&gt</p>`
@@ -41,6 +41,10 @@ function processAttrs(attrs: string[]) {
     if (splitIdx != -1) {
       let key = attr.slice(0, splitIdx), value = attr.slice(splitIdx + 1)
       result += `<span class=declare-attr-key>${key}</span>=<span class=declare-attr-value>${value}</span>${isNeedEndChar(i, n, '&nbsp;')}`
+    } else {
+      // 匹配不到属性了
+      result += attr;
+      continue;
     }
   }
   return result;
