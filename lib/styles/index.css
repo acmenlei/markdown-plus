@@ -116,7 +116,7 @@ pre code::before {
   color: #eee;
 }
 /* 函数关键字，针对function */
-.declare-method {
+.declare-method,.declare-function{
   color: rgb(233, 73, 159);
   font-weight: bold;
 }
@@ -145,10 +145,10 @@ pre code::before {
   color: rgb(94, 147, 252);
 }
 /* 调用函数所传入的参数 */
-.declare-call-execute-value {
+/* .declare-call-execute-value {
   color: rgb(230, 144, 144);
   font-weight: bold;
-}
+} */
 /* 操作符（new extends等）和类 */
 .declare-operator-char, .declare-class {
   color: rgb(233, 73, 159);

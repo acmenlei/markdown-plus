@@ -1,6 +1,13 @@
 import { isNeedEndChar } from "../../utils";
+import { parseHTMLSyntax } from "../languages/html";
 import { TemplateList } from "./parseToHTML";
-
+/**
+ * 这里暂时只处理了脚本和html，后续会考虑继续增加。。(除了标记语言，所有语言都是统一进行处理的)
+ * @param templates md切割后的模版
+ * @param i 当前开始处理位置
+ * @param templateLength 模板的总长度
+ * @returns 解析后的带语法高亮的代码块
+ */
 export function parseCodePre(templates: TemplateList, i: number, templateLength: number) {
   let result = '', language = templates[i].slice(3).trim(), line = 1;
   ++i;
@@ -26,56 +33,22 @@ export function parseSingleLineCode(text: string) {
   text && (result += text);
   return result
 }
-// 处理html语法
-function parseHTMLSyntax(syntax: string, line: number) {
-  if (/<(\w+)(.*)>(.*)<\/\w+>/g.test(syntax)) {
-    return syntax.replace(/<(\w+)(.*)>(.*)<\/\w+>/g, ($, $1, $2, $3) => {
-      let attrs = $2.trim().split(" "), result = processAttrs(attrs);
-      return `${genPrefixer(line)}<span class=declare-html-tag>${$1}</span>${result && '&nbsp;' + result}&gt${$3}&lt/<span class=declare-html-tag>${$1}</span>&gt</p>`
-    })
-  } else if (/<(\w+)(.*)>/g.test(syntax)) {
-    let attrs = RegExp.$2.trim().split(" "), result = processAttrs(attrs);
-    return `${genPrefixer(line)}<span class=declare-html-tag>${RegExp.$1}</span>${result && '&nbsp;' + result}&gt</p>`
-  } else if (/<\/(\w+)>/g.test(syntax)) {
-    return `${genPrefixer(line)}/<span class=declare-html-tag>${RegExp.$1}</span>&gt</p>`
-  } else {
-    // 文本(可能为script中的脚本)
-    return parseSyntaxAndLineNumber(syntax, line++);
-  }
-}
-// 解决冗余的字符串
-function genPrefixer(line) {
-  return `<p class=line-code><span class='line-number'>${line}</span>&lt`
-}
-
-function processAttrs(attrs: string[]) {
-  let result = '';
-  for (let i = 0, n = attrs.length; i < n; i++) {
-    let attr = attrs[i];
-    if (!attr.trim()) {
-      result += attr;
-      continue;
-    }
-    let [key, value] = attr.split("=");
-    result += `<span class=declare-attr-key>${key}</span>=<span class=declare-attr-value>${value}</span>${isNeedEndChar(i, n, '&nbsp;')}`
-  }
-  return result;
-}
 
 // TODO: 词法分析暂时先这么写 后续补充。。
-function parseSyntaxAndLineNumber(syntax: string, line: number) {
+export function parseSyntaxAndLineNumber(syntax: string, line: number) {
   let result = parseDeclareKeyWords(syntax);
-  result = parseDeclareString(result);
   result = parseKeyValueNumber(result);
+  result = parseDeclareString(result);
   result = parseFunctionOrMethod(result);
+  result = parseSingleFunctionKeyWord(result);
   result = parseFunctionCall(result);
   result = parseOperatorChar(result);
   result = parseClass(result);
   result = parseSingleComments(result);
   result = parseManyLineComents(result);
-  return `<p class=line-code><span class='line-number'>${line}</span>${result}</p>`
+  return `<p class=line-code><span class=line-number>${line}</span>${result}</p>`
 }
-
+// 解析声明关键字
 function parseDeclareKeyWords(text: string) {
   return text.replace(/(const|let|var|int|long long|short|final|char|byte\[?\]?)(.*)\s*=(.*)/gi, ($, $1, $2, $3) => {
     return `<span class=declare-keyword>${$1}</span><span class=declare-constant-name>${$2}</span>=<span class=${getClassOfType($3)}>${parseDeclareString($3)}</span>`
@@ -83,7 +56,18 @@ function parseDeclareKeyWords(text: string) {
 }
 // 解析字符串
 function parseDeclareString(text: string) {
-  return text.replace(/([\'\"].*[\'\"])/g, ($, $1) => `<span class=declare-string>${$1}</span>`)
+  let result = '', idx = -1;
+  while ((idx = text.indexOf("\"")) != -1 || (idx = text.indexOf("\'")) != -1) {
+    let even = false;
+    text.indexOf("\"") != -1 ? even = true : {};
+    result += text.slice(0, idx);
+    text = text.slice(idx + 1)
+    let lastIdx = even ? text.indexOf("\"") : text.indexOf("\'");
+    result += `<span class=declare-string>"${text.slice(0, lastIdx)}"</span>`;
+    text = text.slice(lastIdx + 1)
+  }
+  text && (result += text);
+  return result;
 }
 // 解析JavaScript函数语法
 function parseFunctionOrMethod(text: string) {
@@ -107,12 +91,19 @@ function parseFunctionOrMethod(text: string) {
     return `<span class=declare-method>${$1}</span><span class=declare-method-name>${$2}</span><span class=declare-method-params>${paramsStr}</span>`
   })
 }
+// 处理箭头函数
+function parseSingleFunctionKeyWord(text: string) {
+  return text.replace(/function/g, ($) => `<span class=declare-function>${$}</span>`);
+}
 // 函数调用
 function parseFunctionCall(text: string) {
-  return text.replace(/(\w+\.?)+\((.*)\)/g, ($, $1, $2, $3) => {
+  return text.replace(/(\w+\.?)+\((.*)\)/g, ($) => {
     let calls = $.split("."), callStr = '';
     for (let i = 0, n = calls.length; i < n; i++) {
-      if (/\((.*)\)/.test(calls[i])) {
+      if (/(.*)\s*=>(.*)/g.test(calls[i])) {
+        // TODO：箭头函数解析部分
+        callStr += calls[i].replace('console', 'console.');
+      } else if (/\((.*)\)/.test(calls[i])) {
         let idx = calls[i].indexOf("(");
         callStr += `<span class=declare-call-execute>${calls[i].slice(0, idx)}</span>(<span class=declare-call-execute-value>${RegExp.$1}</span>)${isNeedEndChar(i, n, '.')}`
       } else {
@@ -141,7 +132,7 @@ function parseClass(text: string) {
 }
 // 解析extends｜new｜implements｜abstract等
 function parseOperatorChar(text: string) {
-  return text.replace(/(export\s+default|export|import|from|extends|new|implements|abstract|void|static)/g, ($, $1) => {
+  return text.replace(/(interface|export\s+default|export|import|from|extends|new|implements|abstract|void|static|return|break|continue|goto|switch|case|finally|try|catch|if|throw)/g, ($, $1) => {
     return `<span class=declare-operator-char>${$1}</span>`
   })
 }
