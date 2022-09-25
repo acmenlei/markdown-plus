@@ -11,5 +11,9 @@
   },
   "keywords": ["markdown-parser", "markdown-transform", "markdown-html", "code-line-number", "highlight", "syntax-high", "markdown-transform"],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Acmenlei/markdown-transform-html.git"
+  }
 }
