@@ -5,5 +5,11 @@
   "license": "MIT",
   "scripts": {
     "dev": "vite"
+  },
+  "dependencies": {
+    "markdown-transform-html": "^1.0.0"
+  },
+  "devDependencies": {
+    "vite": "^3.1.3"
   }
 }
