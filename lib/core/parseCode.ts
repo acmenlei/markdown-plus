@@ -55,19 +55,19 @@ function analysisOfGrammar(s: string, line: number) {
       }
       if (cur != '(') {
         // 换行缺少开括号
-        st.push(handlerJSStr(tmpStr + ')', false))
+        st.push(processSyntax(tmpStr + ')', false))
       } else {
-        st.push(handlerJSStr(tmpStr, true))
+        st.push(processSyntax(tmpStr, true))
       }
       tmpStr = '';
     } else {
       st.push(s[i]);
     }
   }
-  return `<p><span class=line-number>${line}</span><span>${handlerJSStr(st.join(""), false)}</span></p>`
+  return `<p><span class=line-number>${line}</span><span>${processSyntax(st.join(""), false)}</span></p>`
 }
 
-function handlerJSStr(inner: string, parcel: boolean) {
+function processSyntax(inner: string, parcel: boolean) {
   if (!inner.trim()) {
     return parcel ? `(${inner})` : inner;
   }
