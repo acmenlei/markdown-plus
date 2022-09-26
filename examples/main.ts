@@ -1,6 +1,6 @@
 // import { markdownToHTML } from "../index"
-import { markdownToHTML } from "markdown-transform-html"
-import "markdown-transform-html/lib/styles/index.css";
+import { markdownToHTML } from "../"
+import "../lib/styles/index.css";
 
 const md = `
 # 我是一级标题
@@ -25,38 +25,36 @@ const md = `
 - li11
   - li14
 
+### javascript代码高亮
 \`\`\`js
-// 单行注释
+// 注释节点
+# dsad
 /*
  * 多行注释节点
  */
 let text = new name();
-function *foo (name,parser) {
+function *foo (name, parser) {
   console.log(text)
 }
+
 class Person extends People {
   constructor() {
   }
 }
-# 单行注释
-\`\`\`
-\`\`\`js
-new Promise().then(console.log)
-
-function foo(string name, int age) {
-  console.log(text, name, age)
-}
+new Promise().then((err) => console.log(err))
 
 export default {
-  name: "dsasds",
+  name: "coderlei",
   age: 18
 }
 
-const bbb = "2000";
 \`\`\`
+
 > 注释语句
 
+### html代码高亮
 \`\`\`html
+<text id="name" age="18">我是html</text>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -86,6 +84,7 @@ const bbb = "2000";
   3. 标题7
 4. 标题8
 
+### java代码高亮
 \`\`\`java
 BufferedWriter out = null;  
 try {  
@@ -99,7 +98,6 @@ try {
     }  
 }
 \`\`\`
+`;
 
-`
-const html = markdownToHTML(document.querySelector("textarea")?.value as string || md);
-(document.querySelector("#app") as Element).innerHTML = html;
+(document.querySelector("#app") as Element).innerHTML = markdownToHTML(md);
