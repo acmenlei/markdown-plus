@@ -1,5 +1,5 @@
 import { isNeedEndChar } from "../../../utils";
-import { parseSyntaxAndLineNumber } from "../../core/parseCode";
+import { processSyntaxHighlight } from "../../core/parseCode";
 
 // 处理html语法，TODO: 属性内换行的解析...
 export function parseHTMLSyntax(syntax: string, line: number) {
@@ -19,7 +19,7 @@ export function parseHTMLSyntax(syntax: string, line: number) {
     return `${genPrefixer(line)}${RegExp.$1}&lt/<span class=declare-html-tag>${RegExp.$2}</span>&gt</p>`
   } else {
     // 处理标签中间文本的情况(可能为script中的脚本)
-    return parseSyntaxAndLineNumber(syntax, line++);
+    return processSyntaxHighlight(syntax, line++);
   }
 }
 

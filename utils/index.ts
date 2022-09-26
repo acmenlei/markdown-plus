@@ -53,3 +53,26 @@ export function isBLock(s: string) {
 export function isNeedEndChar(i: number, n: number, ch: string) {
   return i < n - 1 ? ch : '';
 }
+
+export function isHTMLTag(s: string) {
+  return ["span", "p", "q", "ul", "li", "ol", "div", "strong", "a", "h1", "h2", "h3", "h4", "h5", "h6", "i"]
+    .includes(s)
+}
+// 暂时写这么多 以后补充...
+export function isFile(s: string) {
+  return ["txt", 'vue', 'js', 'css', 'html', 'png', 'jpg', 'gif', 'ts', 'less', 'scss', 'json', 'md'].includes(s);
+}
+// 普通数据 上面的匹配条件都没有被匹配到 
+export function isNormalData(content: string) {
+  return !content.includes("<q") &&
+    !content.includes("<span") &&
+    !content.includes(")") &&
+    !content.includes("(") &&
+    !content.includes("{") &&
+    !content.includes("}");
+}
+// 是否是注释节点
+export function isComments(s: string) {
+  console.log("ss:", s)
+  return s.startsWith("//") || s.startsWith("/*") || s.startsWith("*") || s.startsWith("#");
+} 

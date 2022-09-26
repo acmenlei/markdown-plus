@@ -1,6 +1,6 @@
 import { matchTitle } from './../../utils/index';
 import { parseBlock } from "./parseBlock";
-import { parseSingleLineCode, parseCodePre } from "./parseCode";
+import { parseSingleLineCode, parseCode } from "./parseCode";
 import { parseNoOrderList } from "./parseNoOrderList";
 import { parseImage } from "./parseImage";
 import { parseSuperLink } from "./parseSuperLink";
@@ -38,7 +38,7 @@ export default function markdownToHTML(template: string) {
       templateStr += result;
     } else if (isPreCode(templates[i])) {
       // 代码块
-      const { result, startIdx } = parseCodePre(templates, i, len);
+      const { result, startIdx } = parseCode(templates, i, len);
       i = startIdx;
       templateStr += result;
     } else if (isSuperLink(templates[i])) {
