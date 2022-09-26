@@ -1,5 +1,5 @@
 <div align="center">
-	<h2>markdown-to-html</h2>
+	<h2>markdown-transform-html</h2>
 	<p align="center">
 	    <a href="https://github.com/Acmenlei/markdown-to-html/tree/master" target="_blank">
 	        <img src="https://img.shields.io/badge/markdown--to--html-1.1-orange" alt="markdown-to-html">
