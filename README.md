@@ -1,5 +1,5 @@
 <div align="center">
-	<h2>markdown-transform-html</h2>
+	<h3>markdown-transform-html</h3>
 	<p align="center">
 	    <a href="https://github.com/Acmenlei/markdown-to-html/tree/master" target="_blank">
 	        <img src="https://img.shields.io/badge/markdown--to--html-1.1-orange" alt="markdown-to-html">
@@ -11,36 +11,39 @@
 	<p>&nbsp;</p>
 </div>
 
-# 介绍
-一款markdown转换器，将markdwon内容转换为html格式，并提供代码行号显示以及代码高亮效果（支持javascript,html,java,c等语言），如果不喜欢本样式，也可以使用highlightjs进行高亮显示，扩展性强。
 
-# 效果
-### JavaScript语法高亮
-![脚本高亮](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/855befde7c9e4dc09b8e52a07a15ab87~tplv-k3u1fbpfcp-watermark.image?)
-### HTML语法高亮
-![HTML解析](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6c2e8256b7c445cb8a1786aca55047f7~tplv-k3u1fbpfcp-watermark.image?)
-### 其他语法
-其他语法可以自己尝试...
-# 使用
-- 安装
+# introduction
+A Markdown converter that converts Markdwon content to HTML format and provides code line number display and code highlighting effect (supporting javascript, HTML, Java, C and other languages). If you don't like this style, you can also use HighlightJS for highlighting, which is extensible.
+
+[The online demo](https://acmenlei.github.io/markdown-transform-html-demo/)
+
+# effect
+### JavaScript syntax highlighted
+![script](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/855befde7c9e4dc09b8e52a07a15ab87~tplv-k3u1fbpfcp-watermark.image?)
+### HTML syntax highlighted
+![html](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6c2e8256b7c445cb8a1786aca55047f7~tplv-k3u1fbpfcp-watermark.image?)
+### Other syntax
+Other grammars can be tried...
+# use
+- the installation
 ```shell
 pnpm install markdown-transform-html
-```
+` ` `
 or
 ```shell
 npm install markdown-transform-html
-```
+` ` `
 or
 ```shell
 yarn add markdown-transform-html
-```
-- 引入
+` ` `
+- the introduction of
 ```ts
 import { markdownToHTML } from "markdown-transform-html"
 import  "markdown-transform-html/lib/styles/index.css";
-```
-- 调用
-`markdownToHTML`方法接收一个markdown文本，返回一个处理好的`HTML`内容，**引入样式**之后自动处理代码高亮以及行号显示。
+` ` `
+- call
+The 'markdownToHTML' method receives a MarkDown text, returns a processed HTML content, and automatically handles code highlighting and line number display after the style is introduced.
 ```ts
 const md = `
 # 我是一级标题
@@ -149,5 +152,5 @@ try {
 const html = markdownToHTML(md);
 (document.querySelector("#app") as Element).innerHTML = html;
 ```
-# 结尾
-详情的使用请查看`examples`文件夹下的案例，有任何建议欢迎提出来，欢迎给仓库贡献代码～
+# end
+For more details, please see the examples in the 'examples' folder. Any suggestions are welcome, and you are welcome to contribute code ~ to the warehouse
