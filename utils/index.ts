@@ -1,6 +1,9 @@
 import { IListItem } from "../lib/core/parseNoOrderList";
 // 正则
-export const matchTitle: RegExp = /(#+)\s(.*)/g, matchOrderList = /^\s*(\d)\./, matchSuperLink = /^\[(.*)\]\((.*)\)/, matchImage = /^\!\[(.*)\]\((.*)\)/;
+export const matchTitle: RegExp = /(#+)\s(.*)/g,
+  matchOrderList = /^\s*(\d)\./,
+  matchSuperLink = /^\[(.*)\]\((.*)\)/,
+  matchImage = /^\!\[(.*)\]\((.*)\)/;
 
 export function processForamt(list: string[]) {
   // 多个换行合并为一个
@@ -64,8 +67,7 @@ export function isFile(s: string) {
 }
 // 普通数据 上面的匹配条件都没有被匹配到 
 export function isNormalData(content: string) {
-  return !content.includes("<q") &&
-    !content.includes("<span") &&
+  return !content.includes("<") &&
     !content.includes(")") &&
     !content.includes("(") &&
     !content.includes("{") &&
@@ -73,6 +75,13 @@ export function isNormalData(content: string) {
 }
 // 是否是注释节点
 export function isComments(s: string) {
-  console.log("ss:", s)
   return s.startsWith("//") || s.startsWith("/*") || s.startsWith("*") || s.startsWith("#");
-} 
+}
+
+export function isFrontChar(i: number, s: string) {
+  return i !== 0 ? s : ''
+}
+
+export function isTable(s: string) {
+  return s.trim()[0] === '|';
+}

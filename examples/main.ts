@@ -87,10 +87,10 @@ export default {
 ### java代码高亮
 \`\`\`java
 BufferedWriter out = null;  
-try {  
-    out = new BufferedWriter(new FileWriter("filename", true));  
+try {
+    BufferedWriter out = new BufferedWriter(new FileWriter("filename", true));  
     out.write("aString");  
-} catch (IOException e) {  
+} catch (IOException e,    Name test) {  
     // error processing code  
 } finally {  
     if (out != null) {  
@@ -98,6 +98,14 @@ try {
     }  
 }
 \`\`\`
+
+| property name | type             | default value | meaning                                            |
+| ------------- | ---------------- | ------------- | ------------------------------------------------------------ |
+| body          | String           | 必须传递      | 需要解析的HTML容器，请传递 class 或 id                       |
+| width         | String ｜ Number | 必须传递      | 设置整个\`VueMarkdownMenuBar\`容器的宽度，可以为百分比，也可为数值 |
+
+
+\`*我是斜体*\` ** 我是加强后的文字**
 `;
 
 (document.querySelector("#app") as Element).innerHTML = markdownToHTML(md);

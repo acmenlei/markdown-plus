@@ -1,4 +1,4 @@
-import { matchTitle } from './../../utils/index';
+import { isTable, matchTitle } from './../../utils/index';
 import { parseBlock } from "./parseBlock";
 import { parseSingleLineCode, parseCode } from "./parseCode";
 import { parseNoOrderList } from "./parseNoOrderList";
@@ -8,6 +8,7 @@ import { parseOrderList } from "./parseOrderList"
 import { parseNormalText } from "./parseText";
 import { getTitleLevel } from "./parseTitle";
 import { isBLock, isImage, isNoOrderList, isOrderList, isPreCode, isSuperLink, isTitle } from "../../utils";
+import { parseTable } from './parseTable';
 
 export type TemplateList = string[];
 export type TemplateStr = string;
@@ -22,6 +23,12 @@ export default function markdownToHTML(template: string) {
       templateStr += curTitle.replace(matchTitle, ($1, $2, $3) => {
         return `<h${getTitleLevel($2)}>${$3}</h${getTitleLevel($2)}>`;
       });
+    } else if (isTable(templates[i])) {
+      const { result, startIdx } = parseTable(templates, i, len)
+      // 重置开始检索的位置
+      i = startIdx;
+      // 将解析得到的结果进行拼接
+      templateStr += result;
     } else if (isNoOrderList(templates[i])) {
       // 说明为无序列表
       const { result, startIdx } = parseNoOrderList(templates, i, len);

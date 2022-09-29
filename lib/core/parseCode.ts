@@ -1,4 +1,4 @@
-import { isComments, isFile, isHTMLTag, isNeedEndChar, isNormalData } from "../../utils";
+import { isComments, isFile, isFrontChar, isHTMLTag, isNeedEndChar, isNormalData } from "../../utils";
 import { parseHTMLSyntax } from "../languages/html";
 import { TemplateList } from "./parseToHTML";
 /**
@@ -135,13 +135,21 @@ function parseFuntionExecute(content: string) {
   return content.replace(/(\w+)(\s*)\(/g, ($, $1, $2) => `<span class=declare-func-execute>${$1}</span>${$2}(`);
 }
 function parseNormalData(content: string) {
-  if (!isNormalData(content)) {
-    return content;
-  }
   let result = '';
   let datas = content.split(",");
+  // console.log(datas)
   for (let i = 0, n = datas.length; i < n; i++) {
-    result += `<span class=declare-normal-data>${datas[i]}</span>${isNeedEndChar(i, n, ',')}`
+    let tmp = datas[i].trim().split(" ");
+    if (!isNormalData(datas[i])) {
+      result += datas[i] + isNeedEndChar(i, n, ',');
+      continue;
+    }
+    if (tmp.length === 2) {
+      // 有类型
+      result += `${isFrontChar(i, ' ')}<span class=declare-param-type>${tmp[0]}</span>&nbsp;<span class=declare-param-val>${tmp[1]}</span>${isNeedEndChar(i, n, ',')}`
+    } else {
+      result += `<span class=declare-normal-data>${datas[i]}</span>${isNeedEndChar(i, n, ',')}`
+    }
   }
   return result;
 }
@@ -181,7 +189,7 @@ function parseSpecComents(text: string) {
 
 // 处理等号后面的数据
 function parseAssignmentStatement(text: string) {
-  return text.replace(/(\w+)(\s+\w+\s*)=(\s*\w+)/g, ($, $1, $2, $3) => {
+  return text.replace(/(\w+)(\s+\w+\s*)=(\s*.*)/g, ($, $1, $2, $3) => {
     if (isHTMLTag($1)) {
       return $;
     }
