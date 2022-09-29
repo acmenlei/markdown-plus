@@ -1,5 +1,5 @@
 // import { markdownToHTML } from "../index"
-import { markdownToHTML } from "markdown-transform-html"
+import { markdownToHTML } from "../"
 import "markdown-transform-html/lib/styles/index.css";
 
 const md = `
