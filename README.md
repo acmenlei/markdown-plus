@@ -146,7 +146,7 @@ try {
 
 \`*我是斜体*\` ** 我是加强后的文字**
 `
-const html = markdownToHTML(document.querySelector("textarea")?.value as string || md);
+const html = markdownToHTML(md);
 (document.querySelector("#app") as Element).innerHTML = html;
 ```
 # 结尾
