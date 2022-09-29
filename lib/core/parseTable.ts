@@ -12,7 +12,7 @@ export function parseTable(templates, i: number, templateLength: number) {
     }
   }
   result += `</tbody></table>`;
-  return { startIdx: i, result };
+  return { startIdx: i - 1, result };
 }
 
 function processTableTHead(s: string) {
@@ -34,7 +34,7 @@ function processTabletBody(s: string) {
     if (s[i] == '|' && isValidedSplitChar(s, i - 1) && isValidedSplitChar(s, i + 1)) {
       if (preIdx != -1) {
         let cnts = s.slice(preIdx + 1, i);
-        if(cnts.trim()[0] === '-') {
+        if (cnts.trim()[0] === '-') {
           continue;
         }
         template += `<td>${cnts}</td>`

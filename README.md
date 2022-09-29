@@ -138,6 +138,13 @@ try {
     }  
 }
 \`\`\`
+
+| property name | type             | default value | meaning                                            |
+| ------------- | ---------------- | ------------- | ------------------------------------------------------------ |
+| body          | String           | 测试文本      | 测试文本                     |
+| width         | String ｜ Number | 测试文本      | 测试文本 |
+
+\`*我是斜体*\` ** 我是加强后的文字**
 `
 const html = markdownToHTML(document.querySelector("textarea")?.value as string || md);
 (document.querySelector("#app") as Element).innerHTML = html;

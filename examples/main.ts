@@ -47,7 +47,6 @@ export default {
   name: "coderlei",
   age: 18
 }
-
 \`\`\`
 
 > 注释语句
@@ -101,9 +100,8 @@ try {
 
 | property name | type             | default value | meaning                                            |
 | ------------- | ---------------- | ------------- | ------------------------------------------------------------ |
-| body          | String           | 必须传递      | 需要解析的HTML容器，请传递 class 或 id                       |
-| width         | String ｜ Number | 必须传递      | 设置整个\`VueMarkdownMenuBar\`容器的宽度，可以为百分比，也可为数值 |
-
+| body          | String           | 测试文本      | 测试文本                     |
+| width         | String ｜ Number | 测试文本      | 测试文本 |
 
 \`*我是斜体*\` ** 我是加强后的文字**
 `;
