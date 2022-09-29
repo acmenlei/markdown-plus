@@ -2,8 +2,8 @@ import { IListItem } from "../lib/core/parseNoOrderList";
 // 正则
 export const matchTitle: RegExp = /(#+)\s(.*)/g,
   matchOrderList = /^\s*(\d)\./,
-  matchSuperLink = /^\[(.*)\]\((.*)\)/,
-  matchImage = /^\!\[(.*)\]\((.*)\)/;
+  matchSuperLink = /\[(.*)\]\((.*)\)/g,
+  matchImage = /\!\[(.*)\]\((.*)\)/g;
 
 export function processForamt(list: string[]) {
   // 多个换行合并为一个

@@ -32,28 +32,24 @@ export default function markdownToHTML(template: string) {
     } else if (isNoOrderList(templates[i])) {
       // 说明为无序列表
       const { result, startIdx } = parseNoOrderList(templates, i, len);
-      // 重置开始检索的位置
       i = startIdx;
-      // 将解析得到的结果进行拼接
       templateStr += result;
     } else if (isOrderList(templates[i])) {
       // 说明为有序列表
       const { result, startIdx } = parseOrderList(templates, i, len);
-      // 重置开始检索的位置
       i = startIdx;
-      // 将解析得到的结果进行拼接
       templateStr += result;
     } else if (isPreCode(templates[i])) {
       // 代码块
       const { result, startIdx } = parseCode(templates, i, len);
       i = startIdx;
       templateStr += result;
-    } else if (isSuperLink(templates[i])) {
-      // 说明为超链接
-      templateStr += parseSuperLink();
     } else if (isImage(templates[i])) {
       // 说明为图片
       templateStr += parseImage();
+    } else if (isSuperLink(templates[i])) {
+      // 说明为超链接
+      templateStr += parseSuperLink();
     } else if (isBLock(templates[i])) {
       // 说明为代码块
       templateStr += parseBlock(templates[i]);
