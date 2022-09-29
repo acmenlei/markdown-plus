@@ -24,7 +24,7 @@ export function parseHTMLSyntax(syntax: string, line: number) {
 }
 
 // 解决冗余的字符串
-function genPrefixer(line) {
+function genPrefixer(line: number) {
   return `<p class=line-code><span class='line-number'>${line}</span>`
 }
 // 处理标签内部属性

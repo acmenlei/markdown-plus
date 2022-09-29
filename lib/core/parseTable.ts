@@ -1,4 +1,4 @@
-export function parseTable(templates, i: number, templateLength: number) {
+export function parseTable(templates: string[], i: number, templateLength: number) {
   let result = '<table>';
   // 处理标题
   result += processTableTHead(templates[i]);
