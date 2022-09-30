@@ -6,17 +6,13 @@
   "directories": {
     "lib": "lib"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "keywords": [
     "markdown-parser",
     "markdown-transform",
     "markdown-html",
     "code-line-number",
     "highlight",
-    "syntax-high",
-    "markdown-transform"
+    "syntax-high"
   ],
   "author": {
     "name": "coderlei",
