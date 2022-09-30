@@ -51,6 +51,6 @@ function processAttrs(attrs: string[]) {
 }
 
 function processCommentsFormat(text: string) {
-  text = text.replace(/</g, () => '&lt');
-  return text.replace(/>/g, () => '&gt');
+  text = text.replace(/</g, () => '&lt;');
+  return text.replace(/>/g, () => '&gt;');
 }
