@@ -24,8 +24,8 @@
     "type": "git",
     "url": "git@github.com:Acmenlei/markdown-transform-html.git"
   },
-  "publishConfig": {
-    "registry": "https://github.com/acmenlei/markdown-transform-html.git"
+  "bugs": {
+    "url": "https://github.com/acmenlei/markdown-transform-html/issues"
   },
   "packageManager": "pnpm@6.30.1"
 }

@@ -136,8 +136,11 @@ function parseFuntionExecute(content: string) {
 }
 function parseNormalData(content: string) {
   let result = '';
+  // 处理数组
+  if (/\[(.*)\]/g.test(content)) {
+    return content.replace(/\[(.*)\]/g, ($, $1) => `[<span class=declare-array>${$1}</span>]`)
+  }
   let datas = content.split(",");
-  // console.log(datas)
   for (let i = 0, n = datas.length; i < n; i++) {
     let tmp = datas[i].trim().split(" ");
     if (!isNormalData(datas[i])) {
