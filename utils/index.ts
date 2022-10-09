@@ -1,6 +1,8 @@
 import { IListItem } from "../lib/core/parseNoOrderList";
 // 正则
-export const matchTitle: RegExp = /(#+)\s(.*)/g, matchOrderList = /^\s*(\d)\./, matchSuperLink = /^\[(.*)\]\((.*)\)/, matchImage = /^\!\[(.*)\]\((.*)\)/;
+export const matchTitle: RegExp = /(#+)\s(.*)/g, matchOrderList = /^\s*(\d)\./,
+  matchSuperLink = /^\[(.*)\]\((.*)\)/, matchImage = /^\!\[(.*)\]\((.*)\)/,
+  matchSpecComments = /\/\*(.*)\*\//g, matchFunction = /(function)([\s+\*\(])/g;
 
 export function processForamt(list: string[]) {
   // 多个换行合并为一个
@@ -73,6 +75,13 @@ export function isNormalData(content: string) {
 }
 // 是否是注释节点
 export function isComments(s: string) {
-  console.log("ss:", s)
   return s.startsWith("//") || s.startsWith("/*") || s.startsWith("*") || s.startsWith("#");
-} 
+}
+
+export function isSpecLineComments(s: string) {
+  return matchSpecComments.test(s)
+}
+
+export function isFuntionKeyWord(s: string) {
+  return matchFunction.test(s)
+}

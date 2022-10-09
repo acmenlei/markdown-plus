@@ -1,6 +1,6 @@
 // import { markdownToHTML } from "../index"
 import { markdownToHTML } from "../"
-import "../lib/styles/index.css";
+import "../lib/styles/dark.css";
 
 const md = `
 # 我是一级标题
@@ -27,27 +27,39 @@ const md = `
 
 ### javascript代码高亮
 \`\`\`js
-// 注释节点
-# dsad
-/*
- * 多行注释节点
- */
-let text = new name();
-function *foo (name, parser) {
-  console.log(text)
+import name from "static/name.txt"
+let a = true;
+
+// 语法分析
+while (l--) {
+  last = st.lastIndexOf("(");
+  res = "(" + processParcel1(st.slice(last + 1).join(""), false) + res;
+  st = st.slice(0, last);
 }
 
-class Person extends People {
-  constructor() {
+export default class Alice20 extends Person{
+  let name;
+  let sex = '';
+  let age;
+  constructor(): number {
+    this.name='alice';
+    this.age = 20;
+    this.sex = '女';
   }
 }
-new Promise().then((err) => console.log(err))
-
-export default {
-  name: "coderlei",
-  age: 18
-}
-
+(document.querySelector("#app") as Element).innerHTML = markdownToHTML(md);
+module.exports = {
+  productionSourceMap: false,
+  publicPath: './',
+  outputDir: 'dist',
+  assetsDir: 'assets',
+  devServer: {
+      port: 8090,
+      host: '0.0.0.0',
+      https: false,
+      open: true /* comments false */
+  },
+  // 其他配置
 \`\`\`
 
 > 注释语句

@@ -34,7 +34,7 @@ h1, h2 {
 }
 
 pre {
-  background-color: #444;
+  background-color: rgb(18, 28, 55);
   color: white;
   border-radius: 5px;
   position: relative;
@@ -61,62 +61,10 @@ pre p span.line-number {
   height: 100%;
   z-index: 2;
   user-select: none;
-  color: skyblue;
+  color: rgb(22, 91, 118);
   text-align: center;
   padding: 0 4px;
-  background: #333;
-}
-
-/* pre::before {
-  content: "";
-  display: block;
-  width: auto;
-  background: #333;
-  position: absolute;
-  height: 100%;
-  left: 0;
-  top: 0;
-  z-index: 1;
-  border-radius: 5px;
-  border-right: 1px solid #555;
-} */
-/* 
-pre::after, pre code::after, pre code::before {
-  content: "";
-  display: block;
-  width: .7rem;
-  height: .7rem;
-  position: absolute;
-  top: 10px;
-  z-index: 1;
-  border-radius: 50%;
-}
-
-pre::after {
-  background: yellow;
-  right: 1.4rem;
-
-}
-
-pre code::after {
-  background: orangered;
-  right: 2.8rem;
-
-}
-
-pre code::before {
-  right: 4.2rem;
-  background: rgb(15, 91, 242);
-} */
-
-/* 变量声明符号 */
-.declare-keyword {
-  color: rgb(233, 73, 159);
-}
-
-/* 定义的变量名 */
-.declare-constant-name {
-  color: rgb(222, 108, 66);
+  background: rgb(21, 28, 47);
 }
 
 /* 定义的变量值 */
@@ -125,23 +73,14 @@ pre code::before {
 }
 
 /* 函数关键字，针对function */
-.declare-method, .declare-function {
-  color: rgb(233, 73, 159);
-}
-
-/* 方法｜函数名 */
-.declare-func-call, .decalre-prop-call {
-  color: rgb(234, 86, 63);
-}
-
-/* 参数实体 */
-.declare-param {
-  color: rgb(147, 175, 48);
+.declare-method, .declare-function, .declare-operator-char, .declare-keyword, .declare-boolean {
+  color: rgb(219, 140, 21);
+  font-weight: bold;
 }
 
 /* 参数类型 string int 等 */
 .declare-param-type {
-  color: rgb(213, 56, 252);
+  color: skyblue;
 }
 
 /* 类名 */
@@ -151,17 +90,12 @@ pre code::before {
 
 /* 调用函数执行 */
 .declare-func-execute {
-  color: rgb(94, 147, 252);
+  color: rgb(28, 155, 214);
 }
 
 /* 调用函数所传入的参数 */
 .declare-normal-data {
   color: rgb(235, 150, 23);
-}
-
-/* 操作符（new extends等）和类 */
-.declare-operator-char, .declare-class {
-  color: rgb(233, 73, 159);
 }
 
 /* 注释 */
@@ -172,7 +106,7 @@ pre code::before {
 
 /* 字符串颜色 */
 .declare-string, .declare-attr-value {
-  color: rgb(109, 218, 37)!important;
+  color: rgb(113, 194, 58);
 }
 
 /* 数字颜色 */
