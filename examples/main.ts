@@ -30,9 +30,14 @@ const md = `
 import name from "static/name.txt"
 let a = true;
 
+export default function parseJavaSyntax(content: string, line: number) {
+  this.cnts = content;
+  this.line = line;
+}
+
 // 语法分析
 while (l--) {
-  last = st.lastIndexOf("(");
+  last = st.lastIndexOf("(", new Promise());
   res = "(" + processParcel1(st.slice(last + 1).join(""), false) + res;
   st = st.slice(0, last);
 }
