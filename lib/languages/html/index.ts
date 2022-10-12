@@ -1,16 +1,16 @@
 import { isNeedEndChar } from "../../../utils";
-import { processSyntaxHighlight } from "../../core/parseCode";
+import parseJSSyntax from "../js";
 
 // 处理html语法，TODO: 属性内换行的解析...
-export function parseHTMLSyntax(syntax: string, line: number) {
+export default function parseHTMLSyntax(syntax: string, line: number) {
   if (/(<!--.*-->)/g.test(syntax)) {
     // 处理注释内容
     return `${genPrefixer(line)}<span class=declare-comments>${processCommentsFormat(RegExp.$1)}</span></p>`
-  } else if (/(\s*)<(\w+)(.*)>(.*)<\/\w+>/g.test(syntax)) {
+  } else if (/(\s*)<(\!?\w+)(.*)>(.*)<\/\w+>/g.test(syntax)) {
     // 处理标签都在同一行的情况
     let attrs = RegExp.$3.trim().split(" "), result = processAttrs(attrs);
     return `${genPrefixer(line)}${RegExp.$1}&lt<span class=declare-html-tag>${RegExp.$2}</span>${result && '&nbsp;' + result}&gt${RegExp.$4}&lt/<span class=declare-html-tag>${RegExp.$2}</span>&gt</p>`
-  } else if (/(\s*)<(\w+)(.*)>/g.test(syntax)) {
+  } else if (/(\s*)<(\!?\w+)(.*)>/g.test(syntax)) {
     // 处理只有开标签的情况
     let attrs = RegExp.$3.trim().split(" "), result = processAttrs(attrs);
     return `${genPrefixer(line)}${RegExp.$1}&lt<span class=declare-html-tag>${RegExp.$2}</span>${result && '&nbsp;' + result}&gt</p>`
@@ -19,7 +19,7 @@ export function parseHTMLSyntax(syntax: string, line: number) {
     return `${genPrefixer(line)}${RegExp.$1}&lt/<span class=declare-html-tag>${RegExp.$2}</span>&gt</p>`
   } else {
     // 处理标签中间文本的情况(可能为script中的脚本)
-    return processSyntaxHighlight(syntax, line++);
+    return parseJSSyntax(syntax, line++);
   }
 }
 

@@ -1,9 +1,8 @@
 import { IListItem } from "../lib/core/parseNoOrderList";
 // 正则
-export const matchTitle: RegExp = /(#+)\s(.*)/g,
-  matchOrderList = /^\s*(\d)\./,
-  matchSuperLink = /\[(.*)\]\((.*)\)/g,
-  matchImage = /\!\[(.*)\]\((.*)\)/g;
+export const matchTitle: RegExp = /(#+)\s(.*)/g, matchOrderList = /^\s*(\d)\./,
+  matchSuperLink = /^\[(.*)\]\((.*)\)/, matchImage = /^\!\[(.*)\]\((.*)\)/,
+  matchSpecComments = /\/\*(.*)\*\//g, matchFunction = /(function)([\s+\*\(])/g;
 
 export function processForamt(list: string[]) {
   // 多个换行合并为一个
@@ -78,10 +77,25 @@ export function isComments(s: string) {
   return s.startsWith("//") || s.startsWith("/*") || s.startsWith("*") || s.startsWith("#");
 }
 
-export function isFrontChar(i: number, s: string) {
-  return i !== 0 ? s : ''
+export function isSpecLineComments(s: string) {
+  return matchSpecComments.test(s)
 }
 
-export function isTable(s: string) {
-  return s.trim()[0] === '|';
+export function isFuntionKeyWord(s: string) {
+  return matchFunction.test(s)
+}
+
+export function parseString(text: string) {
+  let result = '', idx = -1;
+  while ((idx = text.indexOf("\"")) != -1 || (idx = text.indexOf("\'")) != -1) {
+    let even = false;
+    text.indexOf('\"') != -1 ? even = true : {};
+    result += text.slice(0, idx);
+    text = text.slice(idx + 1)
+    let lastIdx = even ? text.indexOf("\"") : text.indexOf("\'");
+    result += `<q class=declare-string>${text.slice(0, lastIdx)}</q>`;
+    text = text.slice(lastIdx + 1)
+  }
+  text && (result += text);
+  return result;
 }

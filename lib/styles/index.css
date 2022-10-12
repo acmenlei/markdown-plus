@@ -67,45 +67,10 @@
   padding: 0 4px;
   background: #333;
 }
-/* 
-.markdown-transform-html pre::after,
-.markdown-transform-html pre code::after,
-.markdown-transform-html pre code::before {
-  content: "";
-  display: block;
-  width: .7rem;
-  height: .7rem;
-  position: absolute;
-  top: 10px;
-  z-index: 1;
-  border-radius: 50%;
-}
 
-.markdown-transform-html pre::after {
-  background: yellow;
-  right: 1.4rem;
-
-}
-
-.markdown-transform-html pre code::after {
-  background: orangered;
-  right: 2.8rem;
-
-}
-
-.markdown-transform-html pre code::before {
-  right: 4.2rem;
-  background: rgb(15, 91, 242);
-} */
-
-.markdown-transform-html table thead {
-  background-color: rgb(228, 232, 234);
-}
-
-.markdown-transform-html table thead th,
-.markdown-transform-html table tbody td {
-  padding: 8px 10px;
-  text-align: center;
+/* 变量声明符号 */
+.declare-keyword {
+  color: rgb(233, 73, 159);
 }
 
 .markdown-transform-html table tbody td:nth-child(1) {
