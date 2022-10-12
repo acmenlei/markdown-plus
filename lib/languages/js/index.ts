@@ -68,7 +68,7 @@ function processParcel(inner: string, parcel: boolean): string {
   return parcel ? `(${result})` : result;
 }
 
-function parseParcelData(content: string) {
+function parseParcelData(content: string): string {
   // filter expression syntax
   // match default value not undefiend
   if (/^(const|int|string|var|let)/.test(content.trim())) {
