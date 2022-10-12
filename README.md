@@ -13,7 +13,7 @@
 
 
 # introduction
-A Markdown converter that converts Markdwon content to HTML format and provides code line number display and code highlighting effect (supporting javascript, HTML, Java, C and other languages). If you don't like this style, you can also use HighlightJS for highlighting, which is extensible.
+Markdown converter, convert Markdwon content to HTML format, and provide code line number display and code highlighting effect (currently support javascript, HTML and other languages, later will support C, Java, C++, GO, etc.).
 
 [The online demo](https://acmenlei.github.io/markdown-transform-html-demo/)
 
@@ -24,6 +24,8 @@ A Markdown converter that converts Markdwon content to HTML format and provides 
 ![html](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6c2e8256b7c445cb8a1786aca55047f7~tplv-k3u1fbpfcp-watermark.image?)
 ### Other syntax
 Other grammars can be tried...
+# prompt
+To make the style apply only to the part that needs to be parsed, be sure to add a 'markdown-transform-html' class declaration to the parsed container.
 # use
 - the installation
 ```shell
