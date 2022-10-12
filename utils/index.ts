@@ -85,3 +85,18 @@ export function isSpecLineComments(s: string) {
 export function isFuntionKeyWord(s: string) {
   return matchFunction.test(s)
 }
+
+export function parseString(text: string) {
+  let result = '', idx = -1;
+  while ((idx = text.indexOf("\"")) != -1 || (idx = text.indexOf("\'")) != -1) {
+    let even = false;
+    text.indexOf('\"') != -1 ? even = true : {};
+    result += text.slice(0, idx);
+    text = text.slice(idx + 1)
+    let lastIdx = even ? text.indexOf("\"") : text.indexOf("\'");
+    result += `<q class=declare-string>${text.slice(0, lastIdx)}</q>`;
+    text = text.slice(lastIdx + 1)
+  }
+  text && (result += text);
+  return result;
+}

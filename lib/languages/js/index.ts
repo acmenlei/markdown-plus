@@ -1,4 +1,4 @@
-import { isComments, isFuntionKeyWord, isNeedEndChar, isSpecLineComments, matchFunction, matchSpecComments } from "../../../utils";
+import { isComments, isFuntionKeyWord, isNeedEndChar, isSpecLineComments, matchFunction, matchSpecComments, parseString } from "../../../utils";
 
 export default function parseJSSyntax(content: string, line: number) {
   let template = '';
@@ -120,21 +120,6 @@ function parseArrowFunction(content: string) {
     return content;
   }
   return content.replace(/=>/g, ($) => `<span class=declare-arrow-func>${$}</span>`)
-}
-
-function parseString(text: string) {
-  let result = '', idx = -1;
-  while ((idx = text.indexOf("\"")) != -1 || (idx = text.indexOf("\'")) != -1) {
-    let even = false;
-    text.indexOf('\"') != -1 ? even = true : {};
-    result += text.slice(0, idx);
-    text = text.slice(idx + 1)
-    let lastIdx = even ? text.indexOf("\"") : text.indexOf("\'");
-    result += `<q class=declare-string>${text.slice(0, lastIdx)}</q>`;
-    text = text.slice(lastIdx + 1)
-  }
-  text && (result += text);
-  return result;
 }
 
 function parseFuntionExecute(content: string) {

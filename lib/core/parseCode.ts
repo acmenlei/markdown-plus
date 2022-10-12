@@ -1,4 +1,3 @@
-import { isComments, isFile, isHTMLTag, isNeedEndChar, isNormalData } from "../../utils";
 import Parser from "../languages";
 import { TemplateList } from "./parseToHTML";
 /**
