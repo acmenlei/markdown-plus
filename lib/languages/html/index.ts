@@ -2,7 +2,7 @@ import { isNeedEndChar } from "../../../utils";
 import parseJSSyntax from "../js";
 
 // 处理html语法，TODO: 属性内换行的解析...
-export default function parseHTMLSyntax(syntax: string, line: number) {
+export default function parseHTMLSyntax(syntax: string, line: number): string {
   if (/(<!--.*-->)/g.test(syntax)) {
     // 处理注释内容
     return `${genPrefixer(line)}<span class=declare-comments>${processCommentsFormat(RegExp.$1)}</span></p>`

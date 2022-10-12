@@ -1,5 +1,6 @@
 import Parser from "../languages";
 import { TemplateList } from "./parseToHTML";
+import { ILanguages } from "../languages"
 /**
  * 这里暂时只处理了脚本和html，后续会考虑继续增加。。(除了标记语言，所有语言都是统一进行处理的)
  * @param templates md切割后的模版
@@ -12,7 +13,7 @@ export function parseCode(templates: TemplateList, i: number, templateLength: nu
   let result = '', language = templates[i].slice(3).trim().toLowerCase(), line = 1;
   ++i;
   while (i < templateLength && !templates[i].startsWith("```")) {
-    result += Parser[language](templates[i], line++);
+    result += Parser[language as keyof ILanguages](templates[i], line++);
     // result += isHTML ? parseHTMLSyntax(templates[i], line++) : processSyntaxHighlight(templates[i], line++);
     i++;
   }

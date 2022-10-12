@@ -4,6 +4,19 @@ import parseJavaSyntax from "./java"
 import parseJSSyntax from "./js"
 import parseTSSyntax from "./ts"
 
+export type ParserSyntax = (templateLine: string, line: number) => string;
+export interface ILanguages {
+  java: ParserSyntax;
+  c: ParserSyntax;
+  ['c++']: ParserSyntax;
+  ['c#']: ParserSyntax;
+  js: ParserSyntax;
+  ts: ParserSyntax;
+  javascript: ParserSyntax;
+  typescript: ParserSyntax;
+  html: ParserSyntax;
+}
+
 const languages = {
   ['java']: parseJavaSyntax,
   ['c']: parseCSyntax,

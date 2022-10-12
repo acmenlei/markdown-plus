@@ -68,13 +68,17 @@
   background: #333;
 }
 
-/* 变量声明符号 */
-.declare-keyword {
-  color: rgb(233, 73, 159);
-}
-
 .markdown-transform-html table tbody td:nth-child(1) {
   border-left: 1px solid #eee;
+}
+
+.markdown-transform-html table thead {
+  background-color: rgb(217, 223, 231);
+}
+
+.markdown-transform-html table thead th,
+.markdown-transform-html table tbody td {
+  padding: 10px;
 }
 
 .markdown-transform-html table tbody td {

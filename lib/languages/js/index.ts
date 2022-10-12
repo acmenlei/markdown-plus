@@ -1,6 +1,6 @@
 import { isComments, isFuntionKeyWord, isNeedEndChar, isSpecLineComments, matchFunction, matchSpecComments, parseString } from "../../../utils";
 
-export default function parseJSSyntax(content: string, line: number) {
+export default function parseJSSyntax(content: string, line: number): string {
   let template = '';
   let s = content.split('\n');
   for (let i = 0; i < s.length; i++) {
@@ -47,7 +47,7 @@ function analysisOfGrammar(s: string, line: number) {
   return `<p><span class=line-number>${line}</span><span>${res}</span></p>`
 }
 
-function processParcel(inner: string, parcel: boolean) {
+function processParcel(inner: string, parcel: boolean): string {
   if (!inner.trim()) {
     return parcel ? `(${inner})` : inner;
   }

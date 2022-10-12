@@ -1,3 +1,3 @@
-export default function parseCSyntax() {
-  
+export default function parseCSyntax(): string {
+  return '';
 }

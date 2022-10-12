@@ -1,3 +1,3 @@
-export default function parseJavaSyntax() {
-  
+export default function parseJavaSyntax(): string {
+  return ''
 }
