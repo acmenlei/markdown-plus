@@ -77,6 +77,13 @@ export function isComments(s: string) {
   return s.startsWith("//") || s.startsWith("/*") || s.startsWith("*") || s.startsWith("#");
 }
 
+export function isFrontChar(i: number, s: string) {
+  return i !== 0 ? s : ''
+}
+
+export function isTable(s: string) {
+  return s.trim()[0] === '|';
+}
 export function isSpecLineComments(s: string) {
   return matchSpecComments.test(s)
 }
