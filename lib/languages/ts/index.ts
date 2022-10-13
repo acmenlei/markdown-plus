@@ -1,11 +1,11 @@
-import { isComments, isFuntionKeyWord, isNeedEndChar, isSpecLineComments, matchFunction, matchSpecComments } from "../../../utils";
+import { isComments, isFuntionKeyWord, isNeedEndChar, isSpecLineComments, matchFunction, matchSpecComments, parseBoolean, parseNumber, parseString } from "../../../utils";
 
 export default function parseTSSyntax(content: string, line: number): string {
   let template = '';
   let s = content.split('\n');
   for (let i = 0; i < s.length; i++) {
     let sub = s[i];
-    template += analysisOfGrammar(sub, line++)
+    template += analysisOfGrammar(sub.replace(/</g, '&lt;').replace(/>/g, '&gt;'), line++)
   }
   return template;
 }
@@ -60,13 +60,15 @@ function processParcel(inner: string, parcel: boolean): string {
   result = parseArrowFunction(result)
   result = parseFuntionExecute(result)
   result = parseFuntion(result)
+  result = parseBoolean(result);
+  result = parseNumber(result);
   return parcel ? `(${result})` : result;
 }
 
 function parseParcelData(content: string): string {
   // filter expression syntax
   // match default value not undefiend
-  if(/^(const|int|string|var|let)/.test(content.trim())) {
+  if (/^(const|int|string|var|let)/.test(content.trim())) {
     if (/(\w+\s+)(.*\s*)=(.*)/.test(content)) {
       return content.replace(/(\s*\w+\s+)(.*\s*)=(.*)/, ($, $1, $2, $3) => {
         return `${parseDeclareConstant($1)}${parserSubContent($2)}=${parseParcelData($3)}`
@@ -88,9 +90,17 @@ function parseParcelData(content: string): string {
   return result;
 }
 
+const matchNormalType = /(\s*\w+\s*)?:(\s*\w+\s*)/g,
+  matchGenericType = /(:\s*\w+\s*)?&lt;(\s*\/?\s*\w+\s*)&gt;/g;
 function parserSubContent(s: string) {
-  if (/(\s*\w+\s*)?:(\s*\w+\s*)/.test(s)) {
-    return s.replace(/(\s*\w+\s*)?:(\s*\w+\s*)/, ($, $1, $2) => {
+  if (matchGenericType.test(s)) {
+    return s.replace(matchGenericType, ($, $1, $2) => {
+      let rest = $1 ? `<span class=declare-param-type>${$1}</span>` : '';
+      return `${rest}&lt;<span class=declare-param-type>${$2}</span>&gt;`;
+    })
+  }
+  if (matchNormalType.test(s)) {
+    return s.replace(matchNormalType, ($, $1, $2) => {
       if (!$1) {
         return `:<span class=declare-param-type>${$2}</span>`
       }
@@ -116,21 +126,6 @@ function parseArrowFunction(content: string) {
   return content.replace(/=>/g, ($) => `<span class=declare-arrow-func>${$}</span>`)
 }
 
-function parseString(text: string) {
-  let result = '', idx = -1;
-  while ((idx = text.indexOf("\"")) != -1 || (idx = text.indexOf("\'")) != -1) {
-    let even = false;
-    text.indexOf("\"") != -1 ? even = true : {};
-    result += text.slice(0, idx);
-    text = text.slice(idx + 1)
-    let lastIdx = even ? text.indexOf("\"") : text.indexOf("\'");
-    result += `<q class=declare-string>${text.slice(0, lastIdx)}</q>`;
-    text = text.slice(lastIdx + 1)
-  }
-  text && (result += text);
-  return result;
-}
-
 function parseFuntionExecute(content: string) {
   return content.replace(/(\w+)(\s*)\(/g, ($, $1, $2) => `<span class=declare-func-execute>${$1}</span>${$2}(`);
 }
@@ -146,7 +141,7 @@ function parseOperatorChar(text: string) {
   if (isSpecLineComments(text)) {
     return parseSpecComents(text);
   }
-  return text.replace(/(class|this|super|interface|export\s+default|export|import|from|extends|new|abstract|void|static|return|break|continue|switch|case|finally|try|catch|else|if|throw)(?=[\s\(\.])/g, ($, $1) => {
+  return text.replace(/(class|in|of|this|super|interface|typeof|module|declare|type|keyof|infer|export\s+default|export|import|from|extends|new|abstract|void|static|return|break|continue|switch|case|finally|try|catch|else|if|throw)(?=[\s\(\.])/g, ($, $1) => {
     return `<span class=declare-operator-char>${$1}</span>`
   })
 }

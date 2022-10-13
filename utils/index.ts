@@ -2,7 +2,7 @@ import { IListItem } from "../lib/core/parseNoOrderList";
 // 正则
 export const matchTitle: RegExp = /(#+)\s(.*)/g, matchOrderList = /^\s*(\d)\./,
   matchSuperLink = /^\[(.*)\]\((.*)\)/, matchImage = /^\!\[(.*)\]\((.*)\)/,
-  matchSpecComments = /\/\*(.*)\*\//g, matchFunction = /(function)([\s+\*\(])/g;
+  matchSpecComments = /\/\*(.*)\*\//g, matchFunction = /(function)([\s\(&lt])/g;
 
 export function processForamt(list: string[]) {
   // 多个换行合并为一个
@@ -105,4 +105,13 @@ export function parseString(text: string) {
   }
   text && (result += text);
   return result;
+}
+
+
+export function parseBoolean(s: string) {
+  return s.replace(/([^\w])(false|true)(?!\w)/g, ($, $1, $2) => `${$1}<span class=declare-boolean>${$2}</span>`)
+}
+
+export function parseNumber(s: string) {
+  return s.replace(/([^\w])(\d+)(?![\w\.])/g, ($, $1, $2) => `${$1}<span class=declare-number>${$2}</span>`)
 }

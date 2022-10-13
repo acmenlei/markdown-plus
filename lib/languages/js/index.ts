@@ -1,11 +1,11 @@
-import { isComments, isFuntionKeyWord, isNeedEndChar, isSpecLineComments, matchFunction, matchSpecComments, parseString } from "../../../utils";
+import { isComments, isFuntionKeyWord, isNeedEndChar, isSpecLineComments, matchFunction, matchSpecComments, parseBoolean, parseNumber, parseString } from "../../../utils";
 
 export default function parseJSSyntax(content: string, line: number): string {
   let template = '';
   let s = content.split('\n');
   for (let i = 0; i < s.length; i++) {
     let sub = s[i];
-    template += analysisOfGrammar(sub, line++)
+    template += analysisOfGrammar(sub.replace(/</g, '&lt;').replace(/>/g, '&gt;'), line++)
   }
   return template;
 }
@@ -95,7 +95,6 @@ function parseParcelData(content: string): string {
 
 function parserSubContent(s: string) {
   if (/(\s*\w+\s*)?:(\s*\w+\s*)/.test(s)) {
-    // console.log('处理返回值类型：', s)
     return s.replace(/(\s*\w+\s*)?:(\s*\w+\s*)/, ($, $1, $2) => {
       if (!$1) {
         return `:<span class=declare-param-type>${$2}</span>`
@@ -137,7 +136,7 @@ function parseOperatorChar(text: string) {
   if (isSpecLineComments(text)) {
     return parseSpecComents(text);
   }
-  return text.replace(/(class|await|async|this|as|super|module|export\s+default|export|import|from|while|extends|new|abstract|void|static|return|break|continue|switch|case|finally|try|catch|else|if|throw)(?=[\s+\(\.])/g, ($, $1) => {
+  return text.replace(/(class|await|in|of|typeof|module|async|this|as|super|module|export\s+default|export|import|from|while|extends|new|abstract|void|static|return|break|continue|switch|case|finally|try|catch|else|if|throw)(?=[\s+\(\.])/g, ($, $1) => {
     return `<span class=declare-operator-char>${$1}</span>`
   })
 }
@@ -151,12 +150,4 @@ function parseSpecComents(text: string) {
   return text.replace(matchSpecComments, ($) => {
     return `<span class=declare-comments>${$}</span>`
   })
-}
-
-function parseBoolean(s: string) {
-  return s.replace(/([^\w])(false|true)(?!\w)/g, ($, $1, $2) => `${$1}<span class=declare-boolean>${$2}</span>`)
-}
-
-function parseNumber(s: string) {
-  return s.replace(/([^\w])(\d+)(?![\w\.])/g, ($, $1, $2) => `${$1}<span class=declare-number>${$2}</span>`)
 }
