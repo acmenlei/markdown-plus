@@ -1,4 +1,15 @@
-import { isComments, isFuntionKeyWord, isNeedEndChar, isSpecLineComments, matchFunction, matchSpecComments, parseBoolean, parseNumber, parseString } from "../../../utils";
+import {
+  isComments,
+  isFuntionKeyWord,
+  isNeedEndChar,
+  isSpecLineComments,
+  matchFunction,
+  matchSpecComments,
+  parseBoolean,
+  parseNull,
+  parseNumber,
+  parseString
+} from "../../../utils";
 
 export default function parseTSSyntax(content: string, line: number): string {
   let template = '';
@@ -62,6 +73,7 @@ function processParcel(inner: string, parcel: boolean): string {
   result = parseFuntion(result)
   result = parseBoolean(result);
   result = parseNumber(result);
+  result = parseNull(result);
   return parcel ? `(${result})` : result;
 }
 

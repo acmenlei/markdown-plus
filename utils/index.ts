@@ -115,3 +115,7 @@ export function parseBoolean(s: string) {
 export function parseNumber(s: string) {
   return s.replace(/([^\w])(\d+)(?![\w\.])/g, ($, $1, $2) => `${$1}<span class=declare-number>${$2}</span>`)
 }
+
+export function parseNull(s: string) {
+  return s.replace(/(\s*null)(?!\w)/g, ($, $1) => `<span class=declare-operator-char>${$1}</span>`)
+}
