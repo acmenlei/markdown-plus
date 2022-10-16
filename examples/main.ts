@@ -19,8 +19,24 @@ try {
 \`\`\`
 ### TS代码高亮
 \`\`\`ts
-const falses: boolean = false;
+<script setup lang="ts">
+import { ref } from "vue"
+
+const falses: Ref<boolean> = ref(false);
 const trues = true;
+</script>
+
+<template>
+<div>
+{{ dsad }}
+</div>
+</template>
+
+<style>
+.a {
+    content: stirng;
+}
+</style>
 \`\`\`
 `;
 
