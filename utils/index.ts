@@ -119,3 +119,7 @@ export function parseNumber(s: string) {
 export function parseNull(s: string) {
   return s.replace(/(\s*null)(?!\w)/g, ($, $1) => `<span class=declare-operator-char>${$1}</span>`)
 }
+
+export function native(s: string) {
+  return s.replace(/</g, '&lt;').replace(/>/g, '&gt;')
+}

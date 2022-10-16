@@ -5,6 +5,7 @@ import {
   isSpecLineComments,
   matchFunction,
   matchSpecComments,
+  native,
   parseBoolean,
   parseNull,
   parseNumber,
@@ -16,7 +17,7 @@ export default function parseJSSyntax(content: string, line: number): string {
   let s = content.split('\n');
   for (let i = 0; i < s.length; i++) {
     let sub = s[i];
-    template += analysisOfGrammar(sub.replace(/</g, '&lt;').replace(/>/g, '&gt;'), line++)
+    template += analysisOfGrammar(native(sub), line++)
   }
   return template;
 }

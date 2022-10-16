@@ -1,11 +1,11 @@
-import { isNeedEndChar } from "../../../utils";
+import { isNeedEndChar, native } from "../../../utils";
 import parseJSSyntax from "../js";
 
 // 处理html语法，TODO: 属性内换行的解析...
 export default function parseHTMLSyntax(syntax: string, line: number): string {
   if (/(<!--.*-->)/g.test(syntax)) {
     // 处理注释内容
-    return `${genPrefixer(line)}<span class=declare-comments>${processCommentsFormat(RegExp.$1)}</span></p>`
+    return `${genPrefixer(line)}<span class=declare-comments>${native(RegExp.$1)}</span></p>`
   } else if (/(\s*)<(\!?\w+)(.*)>(.*)<\/\w+>/g.test(syntax)) {
     // 处理标签都在同一行的情况
     let attrs = RegExp.$3.trim().split(" "), result = processAttrs(attrs);
@@ -48,9 +48,4 @@ function processAttrs(attrs: string[]) {
     }
   }
   return result;
-}
-
-function processCommentsFormat(text: string) {
-  text = text.replace(/</g, () => '&lt;');
-  return text.replace(/>/g, () => '&gt;');
 }
