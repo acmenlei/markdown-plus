@@ -12,8 +12,17 @@ import { parseTable } from './parseTable';
 
 export type TemplateList = string[];
 export type TemplateStr = string;
+export interface ITransformOptions {
+  lineNumber?: boolean;
+  highlight?: boolean;
+}
 
-export default function markdownToHTML(template: string) {
+const defaultOptions: ITransformOptions = {
+  lineNumber: false,
+  highlight: false
+}
+
+export default function markdownToHTML(template: string, options?: ITransformOptions) {
   const templates: TemplateList = template.split('\n');
   let templateStr: TemplateStr = '', len = templates?.length || 0;
   for (let i = 0; i < len;) {
@@ -41,7 +50,7 @@ export default function markdownToHTML(template: string) {
       templateStr += result;
     } else if (isPreCode(templates[i])) {
       // 代码块
-      const { result, startIdx } = parseCode(templates, i, len);
+      const { result, startIdx } = parseCode(templates, i, len, options || defaultOptions);
       i = startIdx;
       templateStr += result;
     } else if (isImage(templates[i])) {

@@ -3,8 +3,9 @@ import parseCSyntax from "./c"
 import parseJavaSyntax from "./java"
 import parseJSSyntax from "./js"
 import parseTSSyntax from "./ts"
+import { ITransformOptions } from "../core/parseToHTML"
 
-export type ParserSyntax = (templateLine: string, line: number) => string;
+export type ParserSyntax = (templateLine: string, line: number, options: ITransformOptions) => string;
 export interface ILanguages {
   java: ParserSyntax;
   c: ParserSyntax;

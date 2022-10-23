@@ -123,3 +123,7 @@ export function parseNull(s: string) {
 export function native(s: string) {
   return s.replace(/</g, '&lt;').replace(/>/g, '&gt;')
 }
+
+export function lineNumber(line: number, need: boolean | undefined) {
+  return need ? `<span class=line-number>${line}</span>` : '';
+}

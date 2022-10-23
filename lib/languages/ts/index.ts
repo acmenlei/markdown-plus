@@ -3,6 +3,7 @@ import {
   isFuntionKeyWord,
   isNeedEndChar,
   isSpecLineComments,
+  lineNumber,
   matchFunction,
   matchSpecComments,
   native,
@@ -11,19 +12,20 @@ import {
   parseNumber,
   parseString
 } from "../../../utils";
+import { ITransformOptions } from "../../core/parseToHTML";
 
-export default function parseTSSyntax(content: string, line: number): string {
+export default function parseTSSyntax(content: string, line: number, options: ITransformOptions): string {
   let template = '';
   let s = content.split('\n');
   for (let i = 0; i < s.length; i++) {
     let sub = s[i];
-    template += analysisOfGrammar(native(sub), line++)
+    template += analysisOfGrammar(native(sub), line++, options)
   }
   return template;
 }
 
 // 语法分析
-function analysisOfGrammar(s: string, line: number) {
+function analysisOfGrammar(s: string, line: number, options: ITransformOptions) {
   let st: string[] = [], tmpStr = '', l = 0, res = '';
   for (let i = 0; i < s.length; i++) {
     if (s[i] == ")") {
@@ -53,7 +55,7 @@ function analysisOfGrammar(s: string, line: number) {
   if (st.length) {
     res = processParcel(st.join(""), false) + res
   }
-  return `<p><span class=line-number>${line}</span><span>${res}</span></p>`
+  return `<p>${lineNumber(line, options.lineNumber)}<span>${res}</span></p>`
 }
 
 function processParcel(inner: string, parcel: boolean): string {

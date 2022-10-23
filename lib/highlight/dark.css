@@ -1,4 +1,4 @@
-.markdown-transform-html pre *{
+.markdown-transform-html pre * {
   box-sizing: border-box;
   color: #ccc;
 }
@@ -10,38 +10,29 @@
   text-shadow: 0 0 20px rgb(255, 160, 133);
 }
 
-.markdown-transform-html blockquote {
-  background: #eee;
-  position: relative;
-  margin: 0;
-  padding: 10px 10px 10px 30px;
-}
-
-.markdown-transform-html blockquote::before {
-  position: absolute;
-  content: "";
-  display: block;
-  width: 8px;
-  background: #ccc;
-  height: 100%;
-  left: 0;
-  top: 0;
-}
-
-.markdown-transform-html h1, 
-.markdown-transform-html h2 {
-  border-bottom: 2px solid #eee;
-  padding-bottom: 5px;
-}
-
 .markdown-transform-html pre {
   background-color: rgb(18, 28, 55);
   color: white;
   border-radius: 5px;
   position: relative;
   font-size: 1rem;
-  padding: 0 10px 5px 0;
+  padding: 0 10px 0 0;
   overflow: hidden;
+}
+
+.markdown-transform-html pre .language {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  color: #909090;
+  width: 40px;
+  height: 20px;
+  text-align: center;
+  background: #000;
+  opacity: .6;
+  line-height: 20px;
+  border-radius: 4px;
+  font-size: 12px;
 }
 
 .markdown-transform-html pre p span {
@@ -62,28 +53,10 @@
   height: 100%;
   z-index: 2;
   user-select: none;
-  color: rgb(22, 91, 118);
+  color: rgb(81, 168, 202);
   text-align: center;
   padding: 0 4px;
   background: rgb(21, 28, 47);
-}
-
-.markdown-transform-html table tbody td:nth-child(1) {
-  border-left: 1px solid #eee;
-}
-
-.markdown-transform-html table thead {
-  background-color: rgb(217, 223, 231);
-}
-
-.markdown-transform-html table thead th,
-.markdown-transform-html table tbody td {
-  padding: 10px;
-}
-
-.markdown-transform-html table tbody td {
-  border-right: 1px solid #eee;
-  border-bottom: 1px solid #eee;
 }
 
 /* 定义的变量值 */
@@ -92,10 +65,10 @@
 }
 
 /* 函数关键字，针对function */
-.markdown-transform-html .declare-method, 
-.markdown-transform-html .declare-function, 
-.markdown-transform-html .declare-operator-char, 
-.markdown-transform-html .declare-keyword, 
+.markdown-transform-html .declare-method,
+.markdown-transform-html .declare-function,
+.markdown-transform-html .declare-operator-char,
+.markdown-transform-html .declare-keyword,
 .markdown-transform-html .declare-boolean {
   color: rgb(219, 140, 21);
   font-weight: bold;
@@ -128,13 +101,13 @@
 }
 
 /* 字符串颜色 */
-.markdown-transform-html .declare-string, 
+.markdown-transform-html .declare-string,
 .markdown-transform-html .declare-attr-value {
   color: rgb(113, 194, 58);
 }
 
 /* 数字颜色 */
-.markdown-transform-html .declare-number, 
+.markdown-transform-html .declare-number,
 .markdown-transform-html .declare-attr-key {
   color: rgb(212, 155, 50);
 }

@@ -1,11 +1,22 @@
-// import { markdownToHTML } from "../index"
 import { markdownToHTML } from "../"
-import "../lib/styles/dark.css";
+import "../lib/styles/index.css";
+import "../lib/highlight/dark.css"
 
-const md = `
-### java代码高亮
+const code = `
+## 我是标题
+耳机标题文章
+### 我是三级标题
+![图片](wwww.baid.com)
+> 看一下
+\`\`\`js
+const name = 'coderlei';
+new Promsie((resolve, reject) => {
+    resolve("success");
+    console.log("（成功了")
+})
+\`\`\`
 \`\`\`java
-BufferedWriter out = null;  
+BufferedWriter out = null;
 try {  
     out = new BufferedWriter(new FileWriter("filename", true));  
     out.write("aString");  
@@ -17,27 +28,6 @@ try {
     }  
 }
 \`\`\`
-### TS代码高亮
-\`\`\`ts
-<script setup lang="ts">
-import { ref } from "vue"
-
-const falses: Ref<boolean> = ref(false);
-const trues = true;
-</script>
-
-<template>
-<div>
-{{ dsad }}
-</div>
-</template>
-
-<style>
-.a {
-    content: stirng;
-}
-</style>
-\`\`\`
 `;
 
-(document.querySelector("#app") as Element).innerHTML = markdownToHTML(md);
+(document.querySelector("#app") as Element).innerHTML = markdownToHTML(code, { highlight: true, lineNumber: true });

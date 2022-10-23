@@ -1,8 +1,10 @@
+import { ITransformOptions } from './../../core/parseToHTML';
 import {
   isComments,
   isFuntionKeyWord,
   isNeedEndChar,
   isSpecLineComments,
+  lineNumber,
   matchFunction,
   matchSpecComments,
   native,
@@ -12,18 +14,18 @@ import {
   parseString
 } from "../../../utils";
 
-export default function parseJSSyntax(content: string, line: number): string {
+export default function parseJSSyntax(content: string, line: number, options: ITransformOptions): string {
   let template = '';
   let s = content.split('\n');
   for (let i = 0; i < s.length; i++) {
     let sub = s[i];
-    template += analysisOfGrammar(native(sub), line++)
+    template += analysisOfGrammar(native(sub), line++, options)
   }
   return template;
 }
 
 // 语法分析
-function analysisOfGrammar(s: string, line: number) {
+function analysisOfGrammar(s: string, line: number, options: ITransformOptions) {
   let st: string[] = [], tmpStr = '', l = 0, res = '';
   // The string must be processed first, and may contain such symbols, affecting subsequent matches
   s = parseString(s);
@@ -56,7 +58,7 @@ function analysisOfGrammar(s: string, line: number) {
   if (st.length) {
     res = processParcel(st.join(""), false) + res
   }
-  return `<p><span class=line-number>${line}</span><span>${res}</span></p>`
+  return `<p>${lineNumber(line, options.lineNumber)}<span>${res}</span></p>`;
 }
 
 function processParcel(inner: string, parcel: boolean): string {

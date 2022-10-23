@@ -4,10 +4,11 @@
   "main": "main.ts",
   "license": "MIT",
   "scripts": {
-    "dev": "vite"
+    "dev": "vite",
+    "build": "vite build"
   },
   "dependencies": {
-    "markdown-transform-html": "^1.3.0"
+    "markdown-transform-html": "^1.3.8"
   },
   "devDependencies": {
     "@types/node": "^18.7.23",
