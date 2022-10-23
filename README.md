@@ -15,7 +15,7 @@
 # introduce
 Markdown converter, convert Markdwon content to HTML format, and provide code line number display and code highlighting effect (currently support javascript, HTML and other languages, later will support C, Java, C++, GO, etc.).
 
-[The online demo](https://acmenlei.github.io/markdown-transform-html-demo/)
+[The online demo](https://acmenlei.github.io/markdown-transform-html-demo/dist/)
 
 # effect
 ### JavaScript syntax highlighted
