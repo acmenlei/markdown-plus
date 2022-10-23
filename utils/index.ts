@@ -1,7 +1,7 @@
 import { IListItem } from "../lib/core/parseNoOrderList";
 // 正则
 export const matchTitle: RegExp = /(#+)\s(.*)/g, matchOrderList = /^\s*(\d)\./,
-  matchSuperLink = /^\[(.*)\]\((.*)\)/, matchImage = /^\!\[(.*)\]\((.*)\)/,
+  matchSuperLink = /\[(.*)\]\((.*)\)/, matchImage = /!\[(.*)\]\((.*)\)/,
   matchSpecComments = /\/\*(.*)\*\//g, matchFunction = /(function)([\s\(&lt])/g;
 
 export function processForamt(list: string[]) {
@@ -106,7 +106,6 @@ export function parseString(text: string) {
   text && (result += text);
   return result;
 }
-
 
 export function parseBoolean(s: string) {
   return s.replace(/([^\w])(false|true)(?!\w)/g, ($, $1, $2) => `${$1}<span class=declare-boolean>${$2}</span>`)

@@ -38,6 +38,12 @@ export default function markdownToHTML(template: string, options?: ITransformOpt
       i = startIdx;
       // 将解析得到的结果进行拼接
       templateStr += result;
+    } else if (isImage(templates[i])) {
+      // 说明为图片
+      templateStr += parseImage(templates[i]);
+    } else if (isSuperLink(templates[i])) {
+      // 说明为超链接
+      templateStr += parseSuperLink(templates[i]);
     } else if (isNoOrderList(templates[i])) {
       // 说明为无序列表
       const { result, startIdx } = parseNoOrderList(templates, i, len);
@@ -53,12 +59,6 @@ export default function markdownToHTML(template: string, options?: ITransformOpt
       const { result, startIdx } = parseCode(templates, i, len, options || defaultOptions);
       i = startIdx;
       templateStr += result;
-    } else if (isImage(templates[i])) {
-      // 说明为图片
-      templateStr += parseImage();
-    } else if (isSuperLink(templates[i])) {
-      // 说明为超链接
-      templateStr += parseSuperLink();
     } else if (isBLock(templates[i])) {
       // 说明为代码块
       templateStr += parseBlock(templates[i]);
