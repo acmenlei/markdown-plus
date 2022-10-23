@@ -1,7 +1,6 @@
 import { matchSuperLink } from "../../utils";
 
 export function parseSuperLink(s: string) {
-  console.log(s, matchSuperLink.test(s))
   let result = '';
   while (matchSuperLink.test(s)) {
     let altStartIdx = s.indexOf('[');
