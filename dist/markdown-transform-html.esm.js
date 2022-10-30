@@ -1,3 +1,92 @@
+function parseImage(s) {
+    let result = '';
+    while (matchImage.test(s)) {
+        let altStartIdx = s.indexOf('![');
+        let prefix = s.slice(0, altStartIdx);
+        result += prefix;
+        s = s.slice(altStartIdx + 1);
+        let altEndIdx = s.indexOf('](');
+        let alt = s.slice(0, altEndIdx);
+        s = s.slice(altEndIdx + 2);
+        let linkEnd = s.indexOf(")");
+        let link = s.slice(0, linkEnd);
+        s = s.slice(linkEnd + 1);
+        result += `<p><img alt=${alt} src=${link} /></p>`;
+    }
+    return result + s;
+}
+
+function parseSuperLink(s) {
+    let result = '';
+    while (matchSuperLink.test(s)) {
+        let altStartIdx = s.indexOf('[');
+        let prefix = s.slice(0, altStartIdx);
+        result += prefix;
+        s = s.slice(altStartIdx + 1);
+        let altEndIdx = s.indexOf('](');
+        let alt = s.slice(0, altEndIdx);
+        s = s.slice(altEndIdx + 2);
+        let linkEnd = s.indexOf(")");
+        let link = s.slice(0, linkEnd);
+        s = s.slice(linkEnd + 1);
+        result += `<a href=${link}>${alt}</a>`;
+    }
+    return result + s;
+}
+
+function parseNormalText(text) {
+    let result = processStrongText(text);
+    result = processObliqueText(result);
+    result = parseSingleLineCode(result);
+    result = parseSuperLink(result);
+    result = parseImage(result);
+    result = parseIcon(result);
+    return `${result}`;
+}
+function processStrongText(text) {
+    let result = '', idx = -1;
+    while ((idx = text.indexOf("**")) != -1) {
+        result += text.slice(0, idx);
+        text = text.slice(idx + 2);
+        let lastIdx = text.indexOf("**");
+        result += `<strong>${text.slice(0, lastIdx)}</strong>`;
+        text = text.slice(lastIdx + 2);
+    }
+    text && (result += text);
+    return result;
+}
+function processObliqueText(text) {
+    let result = '', idx = -1;
+    while ((idx = text.indexOf("*")) != -1) {
+        result += text.slice(0, idx);
+        text = text.slice(idx + 1);
+        let lastIdx = text.indexOf("*");
+        result += `<i>${text.slice(0, lastIdx)}</i>`;
+        text = text.slice(lastIdx + 1);
+    }
+    text && (result += text);
+    return result;
+}
+// 处理单行code
+function parseSingleLineCode(text) {
+    let result = '', idx = -1;
+    while ((idx = text.indexOf("`")) != -1) {
+        result += text.slice(0, idx);
+        text = text.slice(idx + 1);
+        let lastIdx = text.indexOf("`");
+        result += `<code class=single-code>${text.slice(0, lastIdx)}</code>`;
+        text = text.slice(lastIdx + 1);
+    }
+    text && (result += text);
+    return result;
+}
+// 处理图标
+function parseIcon(text) {
+    return text.replace(/icon:(\w+)\s/g, ($, $1) => {
+        return `<i class='iconfont icon-${$1}'></i>`;
+    });
+}
+
 // 正则
 const matchTitle = /(#+)\s(.*)/g, matchOrderList = /^\s*(\d)\./, matchSuperLink = /\[(.*)\]\((.*)\)/, matchImage = /!\[(.*)\]\((.*)\)/, matchSpecComments = /\/\*(.*)\*\//g, matchFunction = /(function)([\s\(&lt])/g;
 function processForamt(list) {
@@ -15,7 +104,7 @@ function genTemplateStringOfNodes(nodes, isOrder) {
     let listString = "";
     for (let node of nodes) {
         let childrenString = node.children.length ? genTemplateStringOfNodes(node.children, isOrder) : '';
-        listString += `<li>${node.value}${childrenString}</li>`;
+        listString += `<li>${parseNormalText(node.value + childrenString)}</li>`;
     }
     return `<${isOrder ? 'ol' : 'ul'}>${listString}</${isOrder ? 'ol' : 'ul'}>`;
 }
@@ -23,16 +112,11 @@ function isOrderList(s) {
     return matchOrderList.test(s);
 }
 function isNoOrderList(s) {
-    return s.indexOf("-") != -1;
+    let idx = s.indexOf("-");
+    return (idx == 0) || (idx != -1 && !s.slice(0, idx).trim());
 }
 function isTitle(s) {
     return s.indexOf("#") != -1;
-}
-function isImage(s) {
-    return matchImage.test(s);
-}
-function isSuperLink(s) {
-    return matchSuperLink.test(s);
 }
 function isPreCode(s) {
     return s.startsWith("```");
@@ -84,6 +168,15 @@ function native(s) {
 }
 function lineNumber(line, need) {
     return need ? `<span class=line-number>${line}</span>` : '';
+}
+function isMultColumnStart(s) {
+    return s.startsWith("::: start");
+}
+function isMultColumnEnd(s) {
+    return s.startsWith("::: end");
+}
+function isMultColumn(s) {
+    return s.startsWith(":::");
 }
 
 function parseBlock(text) {
@@ -604,19 +697,6 @@ function parseCode(templates, i, templateLength, options) {
     templates[i] = '';
     return { startIdx: i, result: !options.highlight ? `<pre><code>${result}</code></pre>` : `<pre><span class=language>${language}</span><code>${result}</code></pre>` };
 }
-// // 处理单行code
-function parseSingleLineCode(text) {
-    let result = '', idx = -1;
-    while ((idx = text.indexOf("`")) != -1) {
-        result += text.slice(0, idx);
-        text = text.slice(idx + 1);
-        let lastIdx = text.indexOf("`");
-        result += `<code class=single-code>${text.slice(0, lastIdx)}</code>`;
-        text = text.slice(lastIdx + 1);
-    }
-    text && (result += text);
-    return result;
-}
 
 function parseNoOrderList(templates, i, templateLength) {
     let result = '';
@@ -673,42 +753,6 @@ function genListHelper$1(list) {
         currentOperStack.push(listItem);
     }
     return results;
-}
-
-function parseImage(s) {
-    let result = '';
-    while (matchImage.test(s)) {
-        let altStartIdx = s.indexOf('![');
-        let prefix = s.slice(0, altStartIdx);
-        result += prefix;
-        s = s.slice(altStartIdx + 1);
-        let altEndIdx = s.indexOf('](');
-        let alt = s.slice(0, altEndIdx);
-        s = s.slice(altEndIdx + 2);
-        let linkEnd = s.indexOf(")");
-        let link = s.slice(0, linkEnd);
-        s = s.slice(linkEnd + 1);
-        result += `<p><img alt=${alt} src=${link} /></p>`;
-    }
-    return result;
-}
-
-function parseSuperLink(s) {
-    let result = '';
-    while (matchSuperLink.test(s)) {
-        let altStartIdx = s.indexOf('[');
-        let prefix = s.slice(0, altStartIdx);
-        result += prefix;
-        s = s.slice(altStartIdx + 1);
-        let altEndIdx = s.indexOf('](');
-        let alt = s.slice(0, altEndIdx);
-        s = s.slice(altEndIdx + 2);
-        let linkEnd = s.indexOf(")");
-        let link = s.slice(0, linkEnd);
-        s = s.slice(linkEnd + 1);
-        result += `<a href=${link}>${alt}</a>`;
-    }
-    return result;
 }
 
 function parseOrderList(templates, i, templateLength) {
@@ -771,36 +815,6 @@ function genListHelper(list) {
     return results;
 }
 
-function parseNormalText(text) {
-    let result = processStrongText(text);
-    result = processObliqueText(result);
-    return `<p>${result}</p>`;
-}
-function processStrongText(text) {
-    let result = '', idx = -1;
-    while ((idx = text.indexOf("**")) != -1) {
-        result += text.slice(0, idx);
-        text = text.slice(idx + 2);
-        let lastIdx = text.indexOf("**");
-        result += `<strong>${text.slice(0, lastIdx)}</strong>`;
-        text = text.slice(lastIdx + 2);
-    }
-    text && (result += text);
-    return result;
-}
-function processObliqueText(text) {
-    let result = '', idx = -1;
-    while ((idx = text.indexOf("*")) != -1) {
-        result += text.slice(0, idx);
-        text = text.slice(idx + 1);
-        let lastIdx = text.indexOf("*");
-        result += `<i>${text.slice(0, lastIdx)}</i>`;
-        text = text.slice(lastIdx + 1);
-    }
-    text && (result += text);
-    return result;
-}
-
 function getTitleLevel(level) {
     return level.length > 6 ? 6 : level.length;
 }
@@ -854,6 +868,28 @@ function isValidedSplitChar(s, i) {
     return s[i] === ' ' || s[i] == undefined;
 }
 
+function parseLayout(templates, i, templateLength) {
+    let result = `<div class=flex-layout>`, tmpS = '';
+    ++i;
+    while (i < templateLength && !isMultColumnEnd(templates[i])) {
+        if (isMultColumn(templates[i])) {
+            result += `<div class=flex-layout-item>${markdownToHTML(tmpS)}</div>`;
+            tmpS = '';
+        }
+        else {
+            // tmpS += templates[i].trim() ? markdownToHTML(templates[i]) : '';
+            tmpS += templates[i].trim() ? isSection(templates[i]) + '\n' : '';
+        }
+        i++;
+    }
+    result += `<div class=flex-layout-item>${markdownToHTML(tmpS)}</div>`;
+    result += `</div>`;
+    return { result, startIdx: i };
+}
+function isSection(s) {
+    return (s.trim()[0] === '-' || /^\d\./.test(s.trim())) ? s : `<p>${s}</p>`;
+}
+
 const defaultOptions = {
     lineNumber: false,
     highlight: false
@@ -869,20 +905,19 @@ function markdownToHTML(template, options) {
                 return `<h${getTitleLevel($2)}>${$3}</h${getTitleLevel($2)}>`;
             });
         }
+        else if (isMultColumnStart(templates[i])) {
+            const { result, startIdx } = parseLayout(templates, i, len);
+            // 重置开始检索的位置
+            i = startIdx;
+            // 将解析得到的结果进行拼接
+            templateStr += result;
+        }
         else if (isTable(templates[i])) {
             const { result, startIdx } = parseTable(templates, i, len);
             // 重置开始检索的位置
             i = startIdx;
             // 将解析得到的结果进行拼接
             templateStr += result;
-        }
-        else if (isImage(templates[i])) {
-            // 说明为图片
-            templateStr += parseImage(templates[i]);
-        }
-        else if (isSuperLink(templates[i])) {
-            // 说明为超链接
-            templateStr += parseSuperLink(templates[i]);
         }
         else if (isNoOrderList(templates[i])) {
             // 说明为无序列表
@@ -909,7 +944,7 @@ function markdownToHTML(template, options) {
         else {
             // 处理普通文字
             if (templates[i] = templates[i].trim()) {
-                templateStr += parseSingleLineCode(parseNormalText(templates[i]));
+                templateStr += parseNormalText(templates[i]);
             }
         }
         i++;
