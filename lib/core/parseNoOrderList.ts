@@ -1,4 +1,4 @@
-import { genTemplateStringOfNodes, processForamt } from "../../utils";
+import { genTemplateStringOfNodes, processForamt } from "../../utils/index";
 import { TemplateList } from "./parseToHTML";
 
 export interface IListItem {

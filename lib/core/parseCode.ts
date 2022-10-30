@@ -1,6 +1,6 @@
-import Parser from "../languages";
+import Parser from "../languages/index";
 import { ITransformOptions, TemplateList } from "./parseToHTML";
-import { ILanguages } from "../languages"
+import { ILanguages } from "../languages/index"
 
 /**
  * 这里暂时只处理了脚本和html，后续会考虑继续增加。。(除了标记语言，所有语言都是统一进行处理的)
@@ -20,17 +20,4 @@ export function parseCode(templates: TemplateList, i: number, templateLength: nu
   // 以防下次进入, 结束标志
   templates[i] = '';
   return { startIdx: i, result: !options.highlight ? `<pre><code>${result}</code></pre>` : `<pre><span class=language>${language}</span><code>${result}</code></pre>` };
-}
-// // 处理单行code
-export function parseSingleLineCode(text: string) {
-  let result = '', idx = -1;
-  while ((idx = text.indexOf("`")) != -1) {
-    result += text.slice(0, idx);
-    text = text.slice(idx + 1)
-    let lastIdx = text.indexOf("`");
-    result += `<code class=single-code>${text.slice(0, lastIdx)}</code>`;
-    text = text.slice(lastIdx + 1)
-  }
-  text && (result += text);
-  return result;
 }

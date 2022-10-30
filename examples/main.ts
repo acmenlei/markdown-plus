@@ -1,64 +1,20 @@
 import { markdownToHTML } from "../"
 import "../lib/styles/index.css";
-import "../lib/highlight/dark.css"
+import "./styles/index.css"
 
-const code = `
-<div align="center">
-	<h3>markdown-transform-html</h3>
-	<p align="center">
-		<a href="https://github.com/Acmenlei/markdown-to-html/tree/master" target="_blank"><img src="https://img.shields.io/badge/markdown--transform--html-%3E1.3-ff69b4" alt="markdown-transform-html"></a>
-		<a href="https://www.tslang.cn/" target="_blank"> <img src="https://img.shields.io/badge/typescript-%3E4.0.0-blue" alt="typescript"></a>
-	</p>
-	<p>&nbsp;</p>
-</div>
+import md1 from "./__test__/test1"
 
-# introduce
-Markdown converter, convert Markdwon content to HTML format, and provide code line number display and code highlighting effect (currently support javascript, HTML and other languages, later will support C, Java, C++, GO, etc.).
-[The online demo](https://acmenlei.github.io/markdown-transform-html-demo/)
+const content = markdownToHTML(md1, { highlight: true, lineNumber: true });
 
-# prompt
-To make the style apply only to the part that needs to be parsed, be sure to add a 'markdown-transform-html' class declaration to the parsed container.
-# use
-## install
-\`\`\`js
-pnpm install markdown-transform-html
-\`\`\`
-or
-\`\`\`js
-npm install markdown-transform-html
-\`\`\`
-or
-\`\`\`js
-yarn add markdown-transform-html
-\`\`\`
-## the basic use
-\`\`\`ts
-import { markdownToHTML } from "markdown-transform-html"
-import  "markdown-transform-html/lib/styles/index.css";
+(document.querySelector("#app") as Element).innerHTML = content;
 
-const markdownContent = \`#### level 4\`;
-const html = markdownToHTML(markdownContent);
-(document.querySelector("#app") as Element).innerHTML = html;
-\`\`\`
-## code highlighting
-If you want to highlight code, then you need to introduce the following css styles and configure options, which is optional.
+// const options: htmlPdf.CreateOptions = {
+//   port: 9222, // port Chrome is listening on
+// };
 
-\`\`\`ts
-import "markdown-transform-html/lib/highlight/dark.css";
-// import "markdown-transform-html/lib/highlight/light.css";
 
-markdownToHTML(markdownContent, { highlight: true });
-\`\`\`
+// const pdf = await htmlPdf.create(content, options);
 
-# options
-Configure the markdownToHTML options
-| property name        | type    | default value | meaning |
-| -------------------- | ------- | ------------- | ------- |
-| lineNumber      | Boolean  | false | If you need line numbers, turn this option on |
-| highlight      | Boolean  | false          | If you need to highlight code in markdown, turn this option on |
+// pdf.toFile("coderlei-resume.pdf")
 
-# end
-For more details, please see the examples in the 'examples' folder. Any suggestions are welcome, and you are welcome to contribute code ~ to the warehouse
-`;
-
-(document.querySelector("#app") as Element).innerHTML = markdownToHTML(code, { highlight: true, lineNumber: true });
+// window.print()

@@ -15,5 +15,5 @@ export function parseImage(s: string) {
     s = s.slice(linkEnd + 1);
     result += `<p><img alt=${alt} src=${link} /></p>`;
   }
-  return result;
+  return result + s;
 }

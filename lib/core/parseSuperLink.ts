@@ -1,4 +1,4 @@
-import { matchSuperLink } from "../../utils";
+import { matchSuperLink } from "../../utils/index";
 
 export function parseSuperLink(s: string) {
   let result = '';
@@ -15,5 +15,5 @@ export function parseSuperLink(s: string) {
     s = s.slice(linkEnd + 1);
     result += `<a href=${link}>${alt}</a>`;
   }
-  return result;
+  return result + s;
 }

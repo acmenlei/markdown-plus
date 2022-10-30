@@ -1,4 +1,5 @@
 import { IListItem } from "../lib/core/parseNoOrderList";
+import { parseNormalText } from "../lib/core/parseText";
 // 正则
 export const matchTitle: RegExp = /(#+)\s(.*)/g, matchOrderList = /^\s*(\d)\./,
   matchSuperLink = /\[(.*)\]\((.*)\)/, matchImage = /!\[(.*)\]\((.*)\)/,
@@ -19,7 +20,7 @@ export function genTemplateStringOfNodes(nodes: IListItem[], isOrder: boolean) {
   let listString = "";
   for (let node of nodes) {
     let childrenString = node.children.length ? genTemplateStringOfNodes(node.children, isOrder) : '';
-    listString += `<li>${node.value}${childrenString}</li>`
+    listString += `<li>${parseNormalText(node.value + childrenString)}</li>`
   }
   return `<${isOrder ? 'ol' : 'ul'}>${listString}</${isOrder ? 'ol' : 'ul'}>`
 }
@@ -29,7 +30,8 @@ export function isOrderList(s: string) {
 }
 
 export function isNoOrderList(s: string) {
-  return s.indexOf("-") != -1
+  let idx = s.indexOf("-")
+  return (idx == 0) || (idx != -1 && !s.slice(0, idx).trim())
 }
 
 export function isTitle(s: string) {
@@ -125,4 +127,14 @@ export function native(s: string) {
 
 export function lineNumber(line: number, need: boolean | undefined) {
   return need ? `<span class=line-number>${line}</span>` : '';
+}
+
+export function isMultColumnStart(s: string) {
+  return s.startsWith("::: start");
+}
+export function isMultColumnEnd(s: string) {
+  return s.startsWith("::: end");
+}
+export function isMultColumn(s: string) {
+  return s.startsWith(":::");
 }
