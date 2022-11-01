@@ -1,13 +1,14 @@
-import { isMultColumnStart, isTable, matchTitle } from './../../utils/index';
+import { isHeadLayoutStart, isMultColumnStart, isTable } from './../../utils/index';
 import { parseBlock } from "./parseBlock";
 import { parseCode } from "./parseCode";
 import { parseNoOrderList } from "./parseNoOrderList";
 import { parseOrderList } from "./parseOrderList"
 import { parseNormalText } from "./parseText";
-import { getTitleLevel } from "./parseTitle";
-import { isBLock, isImage, isNoOrderList, isOrderList, isPreCode, isSuperLink, isTitle } from "../../utils/index";
+import { parseTitle } from "./parseTitle";
+import { isBLock, isNoOrderList, isOrderList, isPreCode, isSuperLink, isTitle } from "../../utils/index";
 import { parseTable } from './parseTable';
 import parseLayout from './parseLayout';
+import parseHeadLayout from './parseHeadLayout';
 
 export type TemplateList = string[];
 export type TemplateStr = string;
@@ -27,11 +28,12 @@ export default function markdownToHTML(template: string, options?: ITransformOpt
   for (let i = 0; i < len;) {
     if (isTitle(templates[i])) {
       // 说明为标题
-      let curTitle = templates[i].trim();
-      templateStr += curTitle.replace(matchTitle, ($1, $2, $3) => {
-        return `<h${getTitleLevel($2)}>${$3}</h${getTitleLevel($2)}>`;
-      });
-    } else if(isMultColumnStart(templates[i])) {
+      templateStr += parseTitle(templates[i])
+    } else if (isHeadLayoutStart(templates[i])) {
+      const { result, startIdx } = parseHeadLayout(templates, i, len)
+      i = startIdx;
+      templateStr += result;
+    } else if (isMultColumnStart(templates[i])) {
       const { result, startIdx } = parseLayout(templates, i, len)
       // 重置开始检索的位置
       i = startIdx;
@@ -46,12 +48,14 @@ export default function markdownToHTML(template: string, options?: ITransformOpt
     } else if (isNoOrderList(templates[i])) {
       // 说明为无序列表
       const { result, startIdx } = parseNoOrderList(templates, i, len);
-      i = startIdx;
+      // 这里进入了当前分支 下面就不会走了 防止这个选项漏掉 那么我们需要回退一步 下面处理有序列表也是一样的
+      // （分支处理结构引出的问题）
+      i = startIdx - 1;
       templateStr += result;
     } else if (isOrderList(templates[i])) {
       // 说明为有序列表
       const { result, startIdx } = parseOrderList(templates, i, len);
-      i = startIdx;
+      i = startIdx - 1;
       templateStr += result;
     } else if (isPreCode(templates[i])) {
       // 代码块

@@ -130,11 +130,19 @@ export function lineNumber(line: number, need: boolean | undefined) {
 }
 
 export function isMultColumnStart(s: string) {
-  return s.startsWith("::: start");
+  return s.trim().startsWith("::: start");
 }
 export function isMultColumnEnd(s: string) {
-  return s.startsWith("::: end");
+  return s.trim().startsWith("::: end");
 }
 export function isMultColumn(s: string) {
-  return s.startsWith(":::");
+  return s.trim().startsWith(":::");
+}
+
+export function isHeadLayoutStart(s: string) {
+  return s.trim().startsWith("::: headStart")
+}
+
+export function isHeadLayoutEnd(s: string) {
+  return s.trim().startsWith("::: headEnd")
 }
