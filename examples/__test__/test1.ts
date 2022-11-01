@@ -1,5 +1,6 @@
-const s = `## 熊磊鑫-Web前端开发工程师
-
+const s = `
+::: headStart
+## xxxx-开发工程师
 ::: start
 icon:user 男 / 2000.08.01 / 江西南昌
 icon:phone 15507942706
@@ -7,6 +8,7 @@ icon:phone 15507942706
 [icon:email coderleilei@163.com](coderleilei@163.com)
 [icon:github https://github.com/acmenlei](https://github.com/acmenlei)
 ::: end
+::: headEnd
 
 ## 教育背景
 ::: start
@@ -18,7 +20,7 @@ icon:phone 15507942706
 ::: end
 
 ::: start
-- **江西工业工程职业技术学院**
+- **江西xxxxx**
 
 - 信息工程学院 - 软件技术 GPA 3.7 / 4.0
 

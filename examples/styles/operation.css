@@ -11,8 +11,10 @@
 
 /* CDN 服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
 @font-face {
-  font-family: "思源宋体 ExtraLight";font-weight: 250;src: url("//at.alicdn.com/wf/webfont/lx6rbR5SOYM7/wrBcSmKA8x34CTSOHApKt.woff2") format("woff2"),
-  url("//at.alicdn.com/wf/webfont/lx6rbR5SOYM7/hd-6TFKTDb2Aj4l-3QMM2.woff") format("woff");
+  font-family: "思源宋体 ExtraLight";
+  font-weight: 250;
+  src: url("//at.alicdn.com/wf/webfont/lx6rbR5SOYM7/wrBcSmKA8x34CTSOHApKt.woff2") format("woff2"),
+    url("//at.alicdn.com/wf/webfont/lx6rbR5SOYM7/hd-6TFKTDb2Aj4l-3QMM2.woff") format("woff");
   font-display: swap;
 }
 
@@ -26,18 +28,43 @@
 }
 
 :root {
-  background: #444;
-  font-size: 15px;
+  background: white;
   font-family: "思源黑体 ExtraLight"
 }
 
+.head-layout {
+  padding: 10px 20px 40px 20px;
+  color: white;
+  position: relative;
+}
+
+.head-layout::after {
+  content: "";
+  width: 864px;
+  height: 100%;
+  background: rgb(18, 83, 203);
+  position: absolute;
+  z-index: -1;
+  top: -28px;
+  left: -38px;
+}
+
+.head-layout h2 {
+  border-color: transparent !important;
+  padding-bottom: 8px !important;
+}
+
+.head-layout a {
+  color: white !important;
+}
+
 .markdown-transform-html {
-  width: 720px;
+  width: 794px;
+  font-size: 14px;
+  padding: 20px 30px;
   margin: 0 auto;
-  border: 1px solid #eee;
-  padding: 10px 30px;
-  background: #f8f8f8;
-  color: #333;
+  position: relative;
+  background: transparent;
 }
 
 .markdown-transform-html blockquote {
@@ -73,8 +100,7 @@
 .markdown-transform-html h4,
 .markdown-transform-html h5,
 .markdown-transform-html h6,
-.markdown-transform-html strong
-{
+.markdown-transform-html strong {
   font-family: "阿里巴巴普惠体 2.0 65 Medium";
   padding: 0;
   margin: 0;
@@ -90,11 +116,14 @@
 .markdown-transform-html h2 {
   font-size: 20px;
 }
+
 .markdown-transform-html h3,
 .markdown-transform-html h4 {
   font-size: 16px;
+  margin-top: 10px;
 }
-.markdown-transform-html h5,.markdown-transform-html h6,.markdown-transform-html strong {
+
+.markdown-transform-html h5, .markdown-transform-html h6, .markdown-transform-html strong {
   font-size: 14px;
 }
 
@@ -150,8 +179,8 @@
   padding: 0;
 }
 
-.markdown-transform-html li,.markdown-transform-html p {
-  font-size: 14px;
+.markdown-transform-html li, .markdown-transform-html p {
+  /* font-size: 14px; */
   margin-top: -2px;
 }
 
@@ -163,6 +192,8 @@
 @media print {
   @page {
     size: A4 portrait;
+    margin: 0;
+    padding: 0;
   }
 
   .other-ele {
