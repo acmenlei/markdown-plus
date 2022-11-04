@@ -1,10 +1,13 @@
 import { TemplateList } from "./parseToHTML";
 import { IListItem } from './parseNoOrderList';
-import { genTemplateStringOfNodes, matchOrderList, processForamt } from "../../utils";
+import { genTemplateStringOfNodes, matchOrderList, processForamt } from "../../utils/index";
 
 export function parseOrderList(templates: TemplateList, i: number, templateLength: number) {
   let result = '';
   for (; i < templateLength; i++) {
+    if (!templates[i].trim()) {
+      continue;
+    }
     if (matchOrderList.test(templates[i])) {
       result += templates[i] + '\n';
     } else {

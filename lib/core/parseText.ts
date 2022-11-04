@@ -1,14 +1,14 @@
 import { parseImage } from "./parseImage";
 import { parseSuperLink } from "./parseSuperLink";
 
-export function parseNormalText(text: string) {
+export function parseNormalText(text: string, inner: boolean = false) {
   let result = processStrongText(text);
   result = processObliqueText(result);
   result = parseSingleLineCode(result);
   result = parseSuperLink(result);
   result = parseImage(result);
   result = parseIcon(result);
-  return `${result}`;
+  return inner ? result : `<p>${result}</p>`;
 }
 
 function processStrongText(text: string) {
@@ -52,7 +52,7 @@ function parseSingleLineCode(text: string) {
 
 // 处理图标
 function parseIcon(text: string) {
-  return text.replace(/icon:(\w+)\s/g, ($, $1) => {
+  return text.replace(/icon:(\w+)(\s|\b)/g, ($, $1) => {
     return `<i class='iconfont icon-${$1}'></i>`;
   })
 }

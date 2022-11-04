@@ -9,15 +9,11 @@ export default function parseLayout(templates: string[], i: number, templateLeng
       result += `<div class=flex-layout-item>${markdownToHTML(tmpS)}</div>`;
       tmpS = '';
     } else {
-      tmpS += templates[i].trim() ? isSection(templates[i]) + '\n' : '';
+      tmpS += templates[i].trim() ? templates[i] + '\n' : '';
     }
     i++;
   }
   result += `<div class=flex-layout-item>${markdownToHTML(tmpS)}</div>`;
   result += `</div>`;
   return { result, startIdx: i }
-}
-
-function isSection(s: string) {
-  return (s.trim()[0] === '-' || /^\d\./.test(s.trim())) ? s : `<p>${s}</p>`
 }

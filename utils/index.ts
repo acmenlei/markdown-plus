@@ -20,7 +20,7 @@ export function genTemplateStringOfNodes(nodes: IListItem[], isOrder: boolean) {
   let listString = "";
   for (let node of nodes) {
     let childrenString = node.children.length ? genTemplateStringOfNodes(node.children, isOrder) : '';
-    listString += `<li>${parseNormalText(node.value + childrenString)}</li>`
+    listString += `<li>${parseNormalText(node.value + childrenString, true)}</li>`
   }
   return `<${isOrder ? 'ol' : 'ul'}>${listString}</${isOrder ? 'ol' : 'ul'}>`
 }

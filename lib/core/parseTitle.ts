@@ -7,6 +7,6 @@ export function getTitleLevel(level: string) {
 
 export function parseTitle(s: string) {
   return s.trim().replace(matchTitle, ($1, $2, $3) => {
-    return `<h${getTitleLevel($2)}>${parseNormalText($3)}</h${getTitleLevel($2)}>`;
+    return `<h${getTitleLevel($2)}>${parseNormalText($3, true)}</h${getTitleLevel($2)}>`;
   });
 }

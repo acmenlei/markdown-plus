@@ -11,7 +11,10 @@ export interface IListItem {
 export function parseNoOrderList(templates: TemplateList, i: number, templateLength: number) {
   let result = '';
   for (; i < templateLength; i++) {
-    if (templates[i].indexOf("-") != -1) {
+    if (!templates[i].trim()) {
+      continue;
+    }
+    if (templates[i].trim()[0] === '-' && templates[i].indexOf("-") != -1) {
       result += templates[i] + '\n';
     } else {
       break;
