@@ -1,12 +1,19 @@
 const s = `
 ::: headStart
+::: start
 ## xxxx-开发工程师
+
 ::: start
 icon:user 男 / 2000.08.01 / 江西南昌
 icon:phone 15507942706
-::: 
+:::
 [icon:email coderleilei@163.com](coderleilei@163.com)
 [icon:github https://github.com/acmenlei](https://github.com/acmenlei)
+::: end
+
+:::
+头像
+
 ::: end
 ::: headEnd
 
