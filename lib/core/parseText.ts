@@ -5,8 +5,8 @@ export function parseNormalText(text: string, inner: boolean = false) {
   let result = processStrongText(text);
   result = processObliqueText(result);
   result = parseSingleLineCode(result);
-  result = parseSuperLink(result);
   result = parseImage(result);
+  result = parseSuperLink(result);
   result = parseIcon(result);
   return inner ? result : `<p>${result}</p>`;
 }

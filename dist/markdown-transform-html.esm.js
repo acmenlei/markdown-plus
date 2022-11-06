@@ -34,14 +34,14 @@ function parseSuperLink(s) {
     return result + s;
 }
 
-function parseNormalText(text) {
+function parseNormalText(text, inner = false) {
     let result = processStrongText(text);
     result = processObliqueText(result);
     result = parseSingleLineCode(result);
-    result = parseSuperLink(result);
     result = parseImage(result);
+    result = parseSuperLink(result);
     result = parseIcon(result);
-    return `${result}`;
+    return inner ? result : `<p>${result}</p>`;
 }
 function processStrongText(text) {
     let result = '', idx = -1;
@@ -82,7 +82,7 @@ function parseSingleLineCode(text) {
 }
 // 处理图标
 function parseIcon(text) {
-    return text.replace(/icon:(\w+)\s/g, ($, $1) => {
+    return text.replace(/icon:(\w+)(\s|\b)/g, ($, $1) => {
         return `<i class='iconfont icon-${$1}'></i>`;
     });
 }
@@ -104,7 +104,7 @@ function genTemplateStringOfNodes(nodes, isOrder) {
     let listString = "";
     for (let node of nodes) {
         let childrenString = node.children.length ? genTemplateStringOfNodes(node.children, isOrder) : '';
-        listString += `<li>${parseNormalText(node.value + childrenString)}</li>`;
+        listString += `<li>${parseNormalText(node.value + childrenString, true)}</li>`;
     }
     return `<${isOrder ? 'ol' : 'ul'}>${listString}</${isOrder ? 'ol' : 'ul'}>`;
 }
@@ -170,13 +170,19 @@ function lineNumber(line, need) {
     return need ? `<span class=line-number>${line}</span>` : '';
 }
 function isMultColumnStart(s) {
-    return s.startsWith("::: start");
+    return s.trim().startsWith("::: start");
 }
 function isMultColumnEnd(s) {
-    return s.startsWith("::: end");
+    return s.trim().startsWith("::: end");
 }
 function isMultColumn(s) {
-    return s.startsWith(":::");
+    return s.trim().startsWith(":::");
+}
+function isHeadLayoutStart(s) {
+    return s.trim().startsWith("::: headStart");
+}
+function isHeadLayoutEnd(s) {
+    return s.trim().startsWith("::: headEnd");
 }
 
 function parseBlock(text) {
@@ -701,7 +707,10 @@ function parseCode(templates, i, templateLength, options) {
 function parseNoOrderList(templates, i, templateLength) {
     let result = '';
     for (; i < templateLength; i++) {
-        if (templates[i].indexOf("-") != -1) {
+        if (!templates[i].trim()) {
+            continue;
+        }
+        if (templates[i].trim()[0] === '-' && templates[i].indexOf("-") != -1) {
             result += templates[i] + '\n';
         }
         else {
@@ -758,6 +767,9 @@ function genListHelper$1(list) {
 function parseOrderList(templates, i, templateLength) {
     let result = '';
     for (; i < templateLength; i++) {
+        if (!templates[i].trim()) {
+            continue;
+        }
         if (matchOrderList.test(templates[i])) {
             result += templates[i] + '\n';
         }
@@ -818,6 +830,11 @@ function genListHelper(list) {
 function getTitleLevel(level) {
     return level.length > 6 ? 6 : level.length;
 }
+function parseTitle(s) {
+    return s.trim().replace(matchTitle, ($1, $2, $3) => {
+        return `<h${getTitleLevel($2)}>${parseNormalText($3, true)}</h${getTitleLevel($2)}>`;
+    });
+}
 
 function parseTable(templates, i, templateLength) {
     let result = '<table>';
@@ -877,8 +894,7 @@ function parseLayout(templates, i, templateLength) {
             tmpS = '';
         }
         else {
-            // tmpS += templates[i].trim() ? markdownToHTML(templates[i]) : '';
-            tmpS += templates[i].trim() ? isSection(templates[i]) + '\n' : '';
+            tmpS += templates[i].trim() ? templates[i] + '\n' : '';
         }
         i++;
     }
@@ -886,8 +902,23 @@ function parseLayout(templates, i, templateLength) {
     result += `</div>`;
     return { result, startIdx: i };
 }
-function isSection(s) {
-    return (s.trim()[0] === '-' || /^\d\./.test(s.trim())) ? s : `<p>${s}</p>`;
+
+function parseHeadLayout(templates, i, templateLength) {
+    let resultStr = `<div class=head-layout>`;
+    ++i;
+    while (i < templateLength && !isHeadLayoutEnd(templates[i])) {
+        if (isMultColumnStart(templates[i])) {
+            const { startIdx, result } = parseLayout(templates, i, templateLength);
+            resultStr += result;
+            i = startIdx + 1;
+        }
+        else {
+            resultStr += templates[i].trim() ? markdownToHTML(templates[i]) : '';
+            i++;
+        }
+    }
+    resultStr += '</div>';
+    return { result: resultStr, startIdx: i };
 }
 
 const defaultOptions = {
@@ -900,10 +931,12 @@ function markdownToHTML(template, options) {
     for (let i = 0; i < len;) {
         if (isTitle(templates[i])) {
             // 说明为标题
-            let curTitle = templates[i].trim();
-            templateStr += curTitle.replace(matchTitle, ($1, $2, $3) => {
-                return `<h${getTitleLevel($2)}>${$3}</h${getTitleLevel($2)}>`;
-            });
+            templateStr += parseTitle(templates[i]);
+        }
+        else if (isHeadLayoutStart(templates[i])) {
+            const { result, startIdx } = parseHeadLayout(templates, i, len);
+            i = startIdx;
+            templateStr += result;
         }
         else if (isMultColumnStart(templates[i])) {
             const { result, startIdx } = parseLayout(templates, i, len);
@@ -922,13 +955,15 @@ function markdownToHTML(template, options) {
         else if (isNoOrderList(templates[i])) {
             // 说明为无序列表
             const { result, startIdx } = parseNoOrderList(templates, i, len);
-            i = startIdx;
+            // 这里进入了当前分支 下面就不会走了 防止这个选项漏掉 那么我们需要回退一步 下面处理有序列表也是一样的
+            // （分支处理结构引出的问题）
+            i = startIdx - 1;
             templateStr += result;
         }
         else if (isOrderList(templates[i])) {
             // 说明为有序列表
             const { result, startIdx } = parseOrderList(templates, i, len);
-            i = startIdx;
+            i = startIdx - 1;
             templateStr += result;
         }
         else if (isPreCode(templates[i])) {
