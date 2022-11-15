@@ -15,7 +15,7 @@ export type TemplateStr = string;
 export interface ITransformOptions {
   lineNumber?: boolean;
   highlight?: boolean;
-  xss: boolean;
+  xss?: boolean;
 }
 
 const defaultOptions: ITransformOptions = {
