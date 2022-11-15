@@ -24,10 +24,9 @@ const defaultOptions: ITransformOptions = {
   xss: true // 默认进行xss处理
 }
 export default function markdownToHTML(template: string, options?: ITransformOptions) {
-  const op = options || defaultOptions,
-    templates: TemplateList = op.xss ? native(template).split('\n') : template.split('\n'),
-    len = templates?.length || 0;
-  let templateStr: TemplateStr = '';
+  let op = options || defaultOptions, templateStr: TemplateStr = '';
+  op = Object.assign({ ...defaultOptions }, op);
+  let templates: TemplateList = op.xss ? native(template).split('\n') : template.split('\n'), len = templates?.length || 0;
 
   for (let i = 0; i < len;) {
     if (isTitle(templates[i])) {

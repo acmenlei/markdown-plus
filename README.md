@@ -64,6 +64,7 @@ Configure the markdownToHTML options
 | -------------------- | ------- | ------------- | ------- |
 | lineNumber      | Boolean  | false | If you need line numbers, turn this option on |
 | highlight      | Boolean  | false          | If you need to highlight code in markdown, turn this option on |
+| xss      | Boolean  | true          | To prevent users from xss attacks on your application, xss is used by default. If you want to turn it off, you can set it to false |
 
 # end
 For more details, please see the examples in the 'examples' folder. Any suggestions are welcome, and you are welcome to contribute code ~ to the warehouse
