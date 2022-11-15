@@ -15,28 +15,30 @@ export type TemplateStr = string;
 export interface ITransformOptions {
   lineNumber?: boolean;
   highlight?: boolean;
+  xss: boolean;
 }
 
 const defaultOptions: ITransformOptions = {
   lineNumber: false,
-  highlight: false
+  highlight: false,
+  xss: true // 默认进行xss处理
 }
-// 第一次直接替换掉所有的字符
-let call = 0;
 export default function markdownToHTML(template: string, options?: ITransformOptions) {
-  const templates: TemplateList = call == 0 ? native(template).split('\n') : template.split('\n');
-  call++;
-  let templateStr: TemplateStr = '', len = templates?.length || 0;
+  const op = options || defaultOptions,
+    templates: TemplateList = op.xss ? native(template).split('\n') : template.split('\n'),
+    len = templates?.length || 0;
+  let templateStr: TemplateStr = '';
+
   for (let i = 0; i < len;) {
     if (isTitle(templates[i])) {
       // 说明为标题
       templateStr += parseTitle(templates[i])
     } else if (isHeadLayoutStart(templates[i])) {
-      const { result, startIdx } = parseHeadLayout(templates, i, len)
+      const { result, startIdx } = parseHeadLayout(templates, i, len, op)
       i = startIdx;
       templateStr += result;
     } else if (isMultColumnStart(templates[i])) {
-      const { result, startIdx } = parseLayout(templates, i, len)
+      const { result, startIdx } = parseLayout(templates, i, len, op)
       // 重置开始检索的位置
       i = startIdx;
       // 将解析得到的结果进行拼接
@@ -61,7 +63,7 @@ export default function markdownToHTML(template: string, options?: ITransformOpt
       templateStr += result;
     } else if (isPreCode(templates[i])) {
       // 代码块
-      const { result, startIdx } = parseCode(templates, i, len, options || defaultOptions);
+      const { result, startIdx } = parseCode(templates, i, len, op);
       i = startIdx;
       templateStr += result;
     } else if (isBLock(templates[i])) {
