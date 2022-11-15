@@ -1,11 +1,11 @@
-import { isHeadLayoutStart, isMultColumnStart, isTable } from './../../utils/index';
+import { isHeadLayoutStart, isMultColumnStart, isTable, native } from './../../utils/index';
 import { parseBlock } from "./parseBlock";
 import { parseCode } from "./parseCode";
 import { parseNoOrderList } from "./parseNoOrderList";
 import { parseOrderList } from "./parseOrderList"
 import { parseNormalText } from "./parseText";
 import { parseTitle } from "./parseTitle";
-import { isBLock, isNoOrderList, isOrderList, isPreCode, isSuperLink, isTitle } from "../../utils/index";
+import { isBLock, isNoOrderList, isOrderList, isPreCode, isTitle } from "../../utils/index";
 import { parseTable } from './parseTable';
 import parseLayout from './parseLayout';
 import parseHeadLayout from './parseHeadLayout';
@@ -21,9 +21,11 @@ const defaultOptions: ITransformOptions = {
   lineNumber: false,
   highlight: false
 }
-
+// 第一次直接替换掉所有的字符
+let call = 0;
 export default function markdownToHTML(template: string, options?: ITransformOptions) {
-  const templates: TemplateList = template.split('\n');
+  const templates: TemplateList = call == 0 ? native(template).split('\n') : template.split('\n');
+  call++;
   let templateStr: TemplateStr = '', len = templates?.length || 0;
   for (let i = 0; i < len;) {
     if (isTitle(templates[i])) {

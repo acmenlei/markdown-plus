@@ -17,6 +17,8 @@ icon:phone 15507942706
 ::: end
 ::: headEnd
 
+<script>alert('弹出')</script>
+
 ## 教育背景
 ::: start
 - **江西财经大学**
@@ -95,6 +97,3 @@ icon:phone 15507942706
 6. 项目中采用节流对交互按钮进行优化，减轻服务端压力，动画也尽量使用 CSS3 的方式实现，提升用户体验`;
 
 export default s;
-
-
-// 文本中可以直接处理code、加粗、链接、图片等（不用递归调用markdownToHTML）
