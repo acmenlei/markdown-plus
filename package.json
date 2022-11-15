@@ -1,7 +1,7 @@
 {
   "name": "markdown-transform-html",
   "version": "1.4.7",
-  "description": "",
+  "description": "一款markdown转html工具，内置一些flex、head、icon特殊语法",
   "main": "index.ts",
   "type": "module",
   "directories": {
