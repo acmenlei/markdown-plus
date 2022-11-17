@@ -17,8 +17,6 @@ icon:phone 15507942706
 ::: end
 ::: headEnd
 
-<script>alert('弹出')</script>
-
 ## 教育背景
 ::: start
 - **江西财经大学**
