@@ -18,7 +18,7 @@ export default function parseLayout(templates: string[], i: number, templateLeng
       resultStr += `<div class=flex-layout-item>${markdownToHTML(tmpS, { ...options, xss: false })}</div>`;
       tmpS = '';
     } else {
-      tmpS += templates[i].trim() ? '\n' + templates[i] : '';
+      tmpS += templates[i].trim() ? '\n' + templates[i] + '\n' : '';
     }
     i++;
   }
