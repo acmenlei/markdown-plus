@@ -1,4 +1,5 @@
-import { isMultColumn, isMultColumnEnd, isMultColumnStart } from "../../utils/index";
+import { isHeadLayoutStart, isMultColumn, isMultColumnEnd, isMultColumnStart } from "../../utils/index";
+import parseHeadLayout from "./parseHeadLayout";
 import markdownToHTML, { ITransformOptions } from "./parseToHTML";
 
 export default function parseLayout(templates: string[], i: number, templateLength: number, options: ITransformOptions) {
@@ -9,11 +10,15 @@ export default function parseLayout(templates: string[], i: number, templateLeng
       const { result, startIdx } = parseLayout(templates, i, templateLength, options);
       tmpS += result;
       i = startIdx;
+    } else if (isHeadLayoutStart(templates[i])) {
+      const { result, startIdx } = parseHeadLayout(templates, i, templateLength, options)
+      tmpS += result;
+      i = startIdx;
     } else if (isMultColumn(templates[i])) {
       resultStr += `<div class=flex-layout-item>${markdownToHTML(tmpS, { ...options, xss: false })}</div>`;
       tmpS = '';
     } else {
-      tmpS += templates[i].trim() ? templates[i] + '\n' : '';
+      tmpS += templates[i].trim() ? '\n' + templates[i] : '';
     }
     i++;
   }

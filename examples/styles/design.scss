@@ -1,0 +1,88 @@
+@import url("./common.css");
+
+.markdown-transform-html {
+  padding: 0;
+
+  .iconfont {
+    margin-right: 5px;
+    font-size: 1.2rem;
+  }
+
+  .head-layout {
+    padding: 10px;
+    background: #000;
+  }
+
+  .flex-layout:first-child {
+    // height: calc(1123px - 10px);
+    align-items: flex-start;
+    flex-wrap: wrap;
+
+    .flex-layout-item {
+      height: 100%;
+
+      // 左侧样式
+      &:first-child {
+        color: #eee;
+        font-size: 15px;
+        margin-left: 5px;
+        flex: 1;
+
+        img {
+          width: 120px;
+          height: 140px;
+          margin-left: 50px;
+          border: 2px solid white;
+        }
+
+        h2 {
+          font-size: 1.3rem;
+        }
+
+        h3 {
+          margin-top: 20px;
+        }
+      }
+
+      // 右侧样式
+      &:last-child {
+        padding-top: 0;
+        flex: 2;
+        flex-wrap: wrap;
+        color: #999;
+
+        .flex-layout {
+          margin-bottom: 20px;
+        }
+        strong {
+          color: #333;
+        }
+        .flex-layout-item {
+          flex: none;
+          background: white;
+          padding: 0;
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  h1,
+  h2 {
+    margin-top: 10px;
+  }
+
+  ul,
+  ol {
+    margin-top: 10px;
+    padding-left: 20px;
+
+    li {
+      margin-top: 8px;
+    }
+  }
+
+  p {
+    margin-top: 8px;
+  }
+}
