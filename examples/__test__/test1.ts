@@ -47,6 +47,11 @@ icon:phone 15507942706
 - 了解计算机网络相关知识，如 TCP/IP、UDP、HTTP、HTTPS、DNS 协议等
 - 了解 Nodejs 及其生态，如 Express、Sequelize，并能使用 Nodejs 搭建基本的后台服务
 
+### 以下是表格
+| s | s | s | s |
+| s | s | s | s |
+| s | s | s | s |
+
 ## 开源作品
 **[icon:github markdown-transform-html](https://github.com/acmenlei/markdown-transform-html)**
 - **工具介绍**：基于 TypeScript 开发的 MD 词法分析器，一站式解析 Markdown 语法为 HTML 结构的工具，且可提供代码高亮功能

@@ -78,7 +78,10 @@ export function isNormalData(content: string) {
 export function isComments(s: string) {
   return s.startsWith("//") || s.startsWith("/*") || s.startsWith("*") || s.startsWith("#");
 }
-
+// 是否是水平分割线
+export function isHorizontalLine(s: string) {
+  return s.trim() === '---';
+}
 export function isFrontChar(i: number, s: string) {
   return i !== 0 ? s : ''
 }

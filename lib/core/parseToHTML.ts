@@ -1,8 +1,9 @@
-import { isHeadLayoutStart, isMultColumnStart, isTable, native } from './../../utils/index';
+import { isHeadLayoutStart, isMultColumnStart, isTable, native, isHorizontalLine } from './../../utils/index';
 import { parseBlock } from "./parseBlock";
 import { parseCode } from "./parseCode";
 import { parseNoOrderList } from "./parseNoOrderList";
 import { parseOrderList } from "./parseOrderList"
+import { parseHorizontalLine } from "./parseHorLine"
 import { parseNormalText } from "./parseText";
 import { parseTitle } from "./parseTitle";
 import { isBLock, isNoOrderList, isOrderList, isPreCode, isTitle } from "../../utils/index";
@@ -42,6 +43,10 @@ export default function markdownToHTML(template: string, options?: ITransformOpt
       i = startIdx;
       // 将解析得到的结果进行拼接
       templateStr += result;
+    }  else if(isHorizontalLine(templates[i])) {
+      // 处理水平分割线
+      templateStr += parseHorizontalLine(templates[i]);
+      ++i;
     } else if (isTable(templates[i])) {
       const { result, startIdx } = parseTable(templates, i, len)
       // 重置开始检索的位置
