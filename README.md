@@ -11,19 +11,11 @@
 	<p>&nbsp;</p>
 </div>
 
-
 # introduce
-Markdown converter, convert Markdwon content to HTML format, and provide code line number display and code highlighting effect (currently support javascript, HTML and other languages, later will support C, Java, C++, GO, etc.).
+Markdown converter, convert Markdwon content to HTML format, and provide code line number display and code highlighting effect (currently support javascript, HTML and other languages, later will support C, C++, Java, JS, TS, Ruby, Rust, PHP, GO, ...).
 
 [The online demo](https://acmenlei.github.io/markdown-transform-html-demo/dist/)
 
-# effect
-### JavaScript syntax highlighted
-![script](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/855befde7c9e4dc09b8e52a07a15ab87~tplv-k3u1fbpfcp-watermark.image?)
-### HTML syntax highlighted
-![html](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6c2e8256b7c445cb8a1786aca55047f7~tplv-k3u1fbpfcp-watermark.image?)
-### Other syntax
-Other grammars can be tried...
 # prompt
 To make the style apply only to the part that needs to be parsed, be sure to add a 'markdown-transform-html' class declaration to the parsed container.
 # use
@@ -52,9 +44,6 @@ const html = markdownToHTML(markdownContent);
 If you want to highlight code, then you need to introduce the following css styles and configure options, which is optional.
 
 ```ts
-import "markdown-transform-html/lib/highlight/dark.css";
-// import "markdown-transform-html/lib/highlight/light.css";
-
 markdownToHTML(markdownContent, { highlight: true });
 ```
 
@@ -66,5 +55,17 @@ Configure the markdownToHTML options
 | highlight      | Boolean  | false          | If you need to highlight code in markdown, turn this option on |
 | xss      | Boolean  | true          | To prevent users from xss attacks on your application, xss is used by default. If you want to turn it off, you can set it to false |
 
-# end
-For more details, please see the examples in the 'examples' folder. Any suggestions are welcome, and you are welcome to contribute code ~ to the warehouse
+## Sponsorship
+
+If you think this project is helpful to you and circumstances permit, you can give me a little support. In short, thank you very much for your support ~
+
+<div style="display: flex; gap: 20px;" >
+<div style="text-align: center">
+<p>WeChat</p>
+<img style="width: 165px; height: 165px" src="./docs/wechat.jpg "alt=" wechat" />
+</div>
+<div style="text-align: center">
+<p>Alipay</p>
+<img style="width: 165px; height: 165px" src="./docs/alipay.jpg "alt=" alipay" />
+</div>
+</div>

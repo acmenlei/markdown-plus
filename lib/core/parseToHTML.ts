@@ -1,4 +1,4 @@
-import { isHeadLayoutStart, isMultColumnStart, isTable, native, isHorizontalLine } from './../../utils/index';
+import { isHeadLayoutStart, isMultColumnStart, isTable, native, isHorizontalLine } from '../../utils/index';
 import { parseBlock } from "./parseBlock";
 import { parseCode } from "./parseCode";
 import { parseNoOrderList } from "./parseNoOrderList";

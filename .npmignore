@@ -1,4 +1,7 @@
 examples
-dist
 node_modules
 pnpm-lock.yaml
+docs
+CHANGELOG.md
+CONTRIBUTING.md
+.DS_Store
