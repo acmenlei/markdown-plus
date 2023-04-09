@@ -69,3 +69,7 @@ If you think this project is helpful to you and circumstances permit, you can gi
 <img style="width: 165px; height: 165px" src="./docs/alipay.jpg "alt=" alipay" />
 </div>
 </div>
+
+## License
+
+MIT © [coderlei](./license)
