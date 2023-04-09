@@ -1,6 +1,6 @@
 {
   "name": "markdown-transform-html",
-  "version": "1.5.9",
+  "version": "1.6.0",
   "description": "一款markdown转html工具，内置一些flex、head、icon特殊语法",
   "main": "index.ts",
   "type": "module",
@@ -32,7 +32,6 @@
     "@rollup/plugin-terser": "^0.4.0",
     "@rollup/plugin-typescript": "^9.0.2",
     "@types/node": "^18.11.4",
-    "@types/prismjs": "^1.26.0",
     "eslint": "^8.26.0",
     "rollup": "^3.2.3",
     "rollup-plugin-postcss": "^4.0.2",
@@ -42,5 +41,8 @@
   },
   "peerDependencies": {
     "prismjs": "^1.29.0"
+  },
+  "peerDevDependencies": {
+    "@types/prismjs": "^1.26.0"
   }
 }
