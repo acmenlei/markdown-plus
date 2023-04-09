@@ -1,6 +1,6 @@
 import { isHeadLayoutStart, isMultColumn, isMultColumnEnd, isMultColumnStart } from "../../utils/index";
 import parseHeadLayout from "./parseHeadLayout";
-import markdownToHTML, { ITransformOptions } from "./parseToHTML";
+import { ITransformOptions, markdownToHTML } from "./parseToHTML";
 
 export default function parseLayout(templates: string[], i: number, templateLength: number, options: ITransformOptions) {
   let resultStr = `<div class=flex-layout>`, tmpS = '';

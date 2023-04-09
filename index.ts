@@ -1,5 +1,2 @@
-import markdownToHTML from "./lib/core/parseToHTML"
-
-export {
-  markdownToHTML
-}
+export { markdownToHTML } from "./lib/core/parseToHTML";
+export { reHighlight } from "./lib/core/parseCode";

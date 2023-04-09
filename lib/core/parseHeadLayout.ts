@@ -1,5 +1,5 @@
 import { isHeadLayoutEnd, isMultColumnStart } from "../../utils/index";
-import markdownToHTML, { ITransformOptions } from "./parseToHTML";
+import { ITransformOptions, markdownToHTML } from "./parseToHTML";
 import parseLayout from "./parseLayout"
 
 export default function parseHeadLayout(templates: string[], i: number, templateLength: number, options: ITransformOptions) {

@@ -1,6 +1,8 @@
 import { ITransformOptions, TemplateList } from "./parseToHTML";
-import "../highlight/prism.css";
-import "../highlight/prism.js";
+import Prism from "prismjs";
+import "prismjs/themes/prism-tomorrow.min.css";
+import "prismjs/plugins/line-numbers/prism-line-numbers.min.css";
+import "prismjs/plugins/line-numbers/prism-line-numbers.min.js";
 /**
  * 这里暂时只处理了脚本和html，后续会考虑继续增加。。(除了标记语言，所有语言都是统一进行处理的)
  * @param templates md切割后的模版
@@ -14,7 +16,6 @@ export function parseCode(
   templateLength: number,
   options: ITransformOptions
 ) {
-  // console.log(templates)
   let result = "",
     language = templates[i].slice(3).trim().toLowerCase();
   ++i;
@@ -28,8 +29,12 @@ export function parseCode(
     lineNumber = options.lineNumber ? "line-numbers" : "",
     classes = [highlight, lineNumber].join(" ");
 
-  result = `<pre><code ${
-    classes && `class='${classes}'`
-  }>${result}</code></pre>`;
+  result = `<pre><code ${classes && `class='${classes}'`}>${Prism.highlight(
+    result,
+    Prism.languages[language],
+    language
+  )}</code></pre>`;
   return { startIdx: i, result };
 }
+
+export const reHighlight = Prism.highlightAll;

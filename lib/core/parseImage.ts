@@ -1,4 +1,4 @@
-import { matchImage } from "../../utils";
+import { matchImage } from "../../utils/index";
 
 export function parseImage(s: string) {
   let result = '';

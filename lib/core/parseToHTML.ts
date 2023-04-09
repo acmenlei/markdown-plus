@@ -1,15 +1,27 @@
-import { isHeadLayoutStart, isMultColumnStart, isTable, native, isHorizontalLine } from '../../utils/index';
+import {
+  isHeadLayoutStart,
+  isMultColumnStart,
+  isTable,
+  native,
+  isHorizontalLine,
+} from "../../utils/index";
 import { parseBlock } from "./parseBlock";
 import { parseCode } from "./parseCode";
 import { parseNoOrderList } from "./parseNoOrderList";
-import { parseOrderList } from "./parseOrderList"
-import { parseHorizontalLine } from "./parseHorLine"
+import { parseOrderList } from "./parseOrderList";
+import { parseHorizontalLine } from "./parseHorLine";
 import { parseNormalText } from "./parseText";
 import { parseTitle } from "./parseTitle";
-import { isBLock, isNoOrderList, isOrderList, isPreCode, isTitle } from "../../utils/index";
-import { parseTable } from './parseTable';
-import parseLayout from './parseLayout';
-import parseHeadLayout from './parseHeadLayout';
+import {
+  isBLock,
+  isNoOrderList,
+  isOrderList,
+  isPreCode,
+  isTitle,
+} from "../../utils/index";
+import { parseTable } from "./parseTable";
+import parseLayout from "./parseLayout";
+import parseHeadLayout from "./parseHeadLayout";
 
 export type TemplateList = string[];
 export type TemplateStr = string;
@@ -22,33 +34,37 @@ export interface ITransformOptions {
 const defaultOptions: ITransformOptions = {
   lineNumber: false,
   highlight: false,
-  xss: true // 默认进行xss处理
-}
-export default function markdownToHTML(template: string, options?: ITransformOptions) {
-  let op = options || defaultOptions, templateStr: TemplateStr = '';
+  xss: true, // 默认进行xss处理
+};
+export function markdownToHTML(template: string, options?: ITransformOptions) {
+  let op = options || defaultOptions,
+    templateStr: TemplateStr = "";
   op = Object.assign({ ...defaultOptions }, op);
-  let templates: TemplateList = op.xss ? native(template).split('\n') : template.split('\n'), len = templates?.length || 0;
+  let templates: TemplateList = op.xss
+      ? native(template).split("\n")
+      : template.split("\n"),
+    len = templates?.length || 0;
 
-  for (let i = 0; i < len;) {
+  for (let i = 0; i < len; ) {
     if (isTitle(templates[i])) {
       // 说明为标题
-      templateStr += parseTitle(templates[i])
+      templateStr += parseTitle(templates[i]);
     } else if (isHeadLayoutStart(templates[i])) {
-      const { result, startIdx } = parseHeadLayout(templates, i, len, op)
+      const { result, startIdx } = parseHeadLayout(templates, i, len, op);
       i = startIdx;
       templateStr += result;
     } else if (isMultColumnStart(templates[i])) {
-      const { result, startIdx } = parseLayout(templates, i, len, op)
+      const { result, startIdx } = parseLayout(templates, i, len, op);
       // 重置开始检索的位置
       i = startIdx;
       // 将解析得到的结果进行拼接
       templateStr += result;
-    }  else if(isHorizontalLine(templates[i])) {
+    } else if (isHorizontalLine(templates[i])) {
       // 处理水平分割线
       templateStr += parseHorizontalLine(templates[i]);
       ++i;
     } else if (isTable(templates[i])) {
-      const { result, startIdx } = parseTable(templates, i, len)
+      const { result, startIdx } = parseTable(templates, i, len);
       // 重置开始检索的位置
       i = startIdx;
       // 将解析得到的结果进行拼接
@@ -75,7 +91,7 @@ export default function markdownToHTML(template: string, options?: ITransformOpt
       templateStr += parseBlock(templates[i]);
     } else {
       // 处理普通文字
-      if (templates[i] = templates[i].trim()) {
+      if ((templates[i] = templates[i].trim())) {
         templateStr += parseNormalText(templates[i]);
       }
     }
