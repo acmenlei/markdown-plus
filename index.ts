@@ -1,2 +1,4 @@
-export { markdownToHTML } from "./lib/core/parseToHTML";
-export { reHighlight } from "./lib/core/parseCode";
+import { markdownToHTML } from "./lib/core/parseToHTML";
+import { reHighlight } from "./lib/core/parseCode";
+
+export { markdownToHTML, reHighlight };

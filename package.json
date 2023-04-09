@@ -1,6 +1,6 @@
 {
   "name": "markdown-transform-html",
-  "version": "1.5.7",
+  "version": "1.5.9",
   "description": "一款markdown转html工具，内置一些flex、head、icon特殊语法",
   "main": "index.ts",
   "type": "module",
@@ -40,7 +40,7 @@
     "typescript": "^4.8.4",
     "vite": "^4.2.1"
   },
-  "dependencies": {
+  "peerDependencies": {
     "prismjs": "^1.29.0"
   }
 }
