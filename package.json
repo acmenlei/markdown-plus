@@ -1,7 +1,7 @@
 {
   "name": "markdown-transform-html",
-  "version": "1.6.1",
-  "description": "一款markdown转html工具，内置一些flex、head、icon特殊语法",
+  "version": "1.6.2",
+  "description": "markdown-transform-html is a Markdown to HTML plug-in written in TypeScript that not only supports common conversions of Markdown syntax, but also extends multi-column layouts and icon syntax.(markdown-transform-html是一款基于TypeScript编写的Markdown转HTML插件，它不仅支持Markdown语法的常见转换，还扩展了多列布局和图标语法.)",
   "main": "index.ts",
   "type": "module",
   "directories": {
@@ -35,6 +35,7 @@
     "eslint": "^8.26.0",
     "rollup": "^3.2.3",
     "rollup-plugin-postcss": "^4.0.2",
+    "@types/prismjs": "^1.26.0",
     "tslib": "^2.4.0",
     "typescript": "^4.8.4",
     "vite": "^4.2.1"

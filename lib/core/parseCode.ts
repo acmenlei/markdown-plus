@@ -5,22 +5,22 @@ import "prismjs/plugins/line-numbers/prism-line-numbers.min.css";
 import "prismjs/plugins/line-numbers/prism-line-numbers.min.js";
 
 // 解析的语言 预设...
-import "prismjs/components/prism-java-min.js";
-import "prismjs/components/prism-css-min.js";
-import "prismjs/components/prism-dart-min.js";
-import "prismjs/components/prism-go-min.js";
-import "prismjs/components/prism-http-min.js";
-import "prismjs/components/prism-json-min.js";
-import "prismjs/components/prism-kotlin-min.js";
-import "prismjs/components/prism-less-min.js";
-import "prismjs/components/prism-objectivec-min.js";
-import "prismjs/components/prism-php-min.js";
-import "prismjs/components/prism-python-min.js";
-import "prismjs/components/prism-ruby-min.js";
-import "prismjs/components/prism-rust-min.js";
-import "prismjs/components/prism-swift-min.js";
-import "prismjs/components/prism-sql-min.js";
-import "prismjs/components/prism-typescript-min.js";
+import "prismjs/components/prism-java.min.js";
+import "prismjs/components/prism-css.min.js";
+import "prismjs/components/prism-dart.min.js";
+import "prismjs/components/prism-go.min.js";
+import "prismjs/components/prism-http.min.js";
+import "prismjs/components/prism-json.min.js";
+import "prismjs/components/prism-kotlin.min.js";
+import "prismjs/components/prism-less.min.js";
+import "prismjs/components/prism-objectivec.min.js";
+import "prismjs/components/prism-php.min.js";
+import "prismjs/components/prism-python.min.js";
+import "prismjs/components/prism-ruby.min.js";
+import "prismjs/components/prism-rust.min.js";
+import "prismjs/components/prism-swift.min.js";
+import "prismjs/components/prism-sql.min.js";
+import "prismjs/components/prism-typescript.min.js";
 /**
  * @param templates md切割后的模版
  * @param i 当前开始处理位置
