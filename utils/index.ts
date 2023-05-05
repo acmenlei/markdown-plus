@@ -139,21 +139,29 @@ export function native(s: string) {
 }
 
 export function isMultColumnStart(s: string) {
-  return s.trim().startsWith("::: start");
+  return s.trim() === "::: start";
 }
 
 export function isMultColumnEnd(s: string) {
-  return s.trim().startsWith("::: end");
+  return s.trim() === "::: end";
 }
 
 export function isMultColumn(s: string) {
-  return s.trim().startsWith(":::");
+  return s.trim() === ':::';
 }
 
 export function isHeadLayoutStart(s: string) {
-  return s.trim().startsWith("::: headStart");
+  return s.trim() === "::: headStart";
 }
 
 export function isHeadLayoutEnd(s: string) {
-  return s.trim().startsWith("::: headEnd");
+  return s.trim() === "::: headEnd"
+}
+
+export function isMainLayoutStart(s: string) {
+  return s.trim() === "::: mainStart"
+}
+
+export function isMainLayoutEnd(s: string) {
+  return s.trim() === "::: mainEnd"
 }

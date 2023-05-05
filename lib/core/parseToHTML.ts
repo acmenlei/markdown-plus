@@ -4,6 +4,7 @@ import {
   isTable,
   native,
   isHorizontalLine,
+  isMainLayoutStart,
 } from "../../utils/index";
 import { parseBlock } from "./parseBlock";
 import { parseCode } from "./parseCode";
@@ -22,6 +23,7 @@ import {
 import { parseTable } from "./parseTable";
 import parseLayout from "./parseLayout";
 import parseHeadLayout from "./parseHeadLayout";
+import parseMainLayout from "./parseMainLayout";
 
 export type TemplateList = string[];
 export type TemplateStr = string;
@@ -53,7 +55,11 @@ export function markdownToHTML(template: string, options?: ITransformOptions) {
       const { result, startIdx } = parseHeadLayout(templates, i, len, op);
       i = startIdx;
       templateStr += result;
-    } else if (isMultColumnStart(templates[i])) {
+    } else if (isMainLayoutStart(templates[i])) {
+      const { result, startIdx } = parseMainLayout(templates, i, len, op);
+      i = startIdx;
+      templateStr += result;
+    }else if (isMultColumnStart(templates[i])) {
       const { result, startIdx } = parseLayout(templates, i, len, op);
       // 重置开始检索的位置
       i = startIdx;
