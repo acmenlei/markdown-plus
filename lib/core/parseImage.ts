@@ -6,7 +6,7 @@ export function parseImage(s: string) {
     let altStartIdx = s.indexOf('![');
     let prefix = s.slice(0, altStartIdx);
     result += prefix;
-    s = s.slice(altStartIdx + 1);
+    s = s.slice(altStartIdx + 2);
     let altEndIdx = s.indexOf('](');
     let alt = s.slice(0, altEndIdx);
     s = s.slice(altEndIdx + 2);
