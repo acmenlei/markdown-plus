@@ -1,4 +1,4 @@
-import { genTemplateStringOfNodes, processForamt } from "../../utils/index";
+import { genTemplateStringOfNodes, processFormat } from "../../utils/index";
 import { TemplateList } from "./parseToHTML";
 
 export interface IListItem {
@@ -29,7 +29,7 @@ function processNoOrderList(template: string) {
   if (!list) {
     return template;
   }
-  processForamt(list)
+  processFormat(list)
   const nodes = genListHelper(list);
   const root = genTemplateStringOfNodes(nodes, false);
   return root;

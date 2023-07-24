@@ -1,15 +1,24 @@
 import { TemplateList } from "./parseToHTML";
-import { IListItem } from './parseNoOrderList';
-import { genTemplateStringOfNodes, matchOrderList, processForamt } from "../../utils/index";
+import { IListItem } from "./parseNoOrderList";
+import {
+  genTemplateStringOfNodes,
+  isOrderList,
+  processFormat,
+} from "../../utils/index";
 
-export function parseOrderList(templates: TemplateList, i: number, templateLength: number) {
-  let result = '';
+export function parseOrderList(
+  templates: TemplateList,
+  i: number,
+  templateLength: number
+) {
+  let result = "";
   for (; i < templateLength; i++) {
     if (!templates[i].trim()) {
       continue;
     }
-    if (matchOrderList.test(templates[i])) {
-      result += templates[i] + '\n';
+    if (isOrderList(templates[i])) {
+      // 把内容抠出来
+      result += templates[i] + "\n";
     } else {
       break;
     }
@@ -19,25 +28,31 @@ export function parseOrderList(templates: TemplateList, i: number, templateLengt
 }
 
 export function processOrderList(template: string) {
-  const list: Array<string> | null = template.match(/\s*\d\.(.*)/g)
+  const list: Array<string> | null = template.match(/\s*\d+\.(.*)/g);
   if (!list) {
     return template;
   }
-  processForamt(list)
+  processFormat(list);
   const nodes = genListHelper(list);
   const root = genTemplateStringOfNodes(nodes, true);
   return root;
 }
 
 function genListHelper(list: string[]) {
-  const results: IListItem[] = [], currentOperStack: IListItem[] = [], n = list.length;
+  const results: IListItem[] = [],
+    currentOperStack: IListItem[] = [],
+    n = list.length;
   for (let i = 0; i < n; i++) {
     let level = 0;
-    if (matchOrderList.test(list[i])) {
+    if (isOrderList(list[i])) {
       level = list[i].indexOf(String(RegExp.$1 + "."));
     }
-    const listItem: IListItem = { children: [], value: list[i].slice(level + 2), level, parent: null }
-
+    const listItem: IListItem = {
+      children: [],
+      value: list[i].slice(level + 2),
+      level,
+      parent: null,
+    };
     if (!currentOperStack.length) {
       results.push(listItem);
       currentOperStack.push(listItem);
@@ -52,7 +67,7 @@ function genListHelper(list: string[]) {
     } else {
       if (topLevel > curLevel) {
         while (currentOperStack[currentOperStack.length - 1].level > curLevel) {
-          currentOperStack.pop()
+          currentOperStack.pop();
         }
         parent = currentOperStack[currentOperStack.length - 1].parent;
       } else {
@@ -65,4 +80,3 @@ function genListHelper(list: string[]) {
   }
   return results;
 }
-

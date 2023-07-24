@@ -59,7 +59,7 @@ export function markdownToHTML(template: string, options?: ITransformOptions) {
       const { result, startIdx } = parseMainLayout(templates, i, len, op);
       i = startIdx;
       templateStr += result;
-    }else if (isMultColumnStart(templates[i])) {
+    } else if (isMultColumnStart(templates[i])) {
       const { result, startIdx } = parseLayout(templates, i, len, op);
       // 重置开始检索的位置
       i = startIdx;
@@ -92,9 +92,9 @@ export function markdownToHTML(template: string, options?: ITransformOptions) {
       const { result, startIdx } = parseCode(templates, i, len, op);
       i = startIdx;
       templateStr += result;
-    } else if (isBLock(templates[i])) {
-      // 说明为代码块
-      templateStr += parseBlock(templates[i]);
+    } else if (isBLock(templates[i].trim())) {
+      // 说明为段落块
+      templateStr += parseBlock(templates[i].trim());
     } else {
       // 处理普通文字
       if ((templates[i] = templates[i].trim())) {

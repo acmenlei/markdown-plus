@@ -2,11 +2,11 @@ import { type IListItem } from "../lib/core/parseNoOrderList";
 import { parseNormalText } from "../lib/core/parseText";
 // 正则
 export const matchTitle: RegExp = /(#+)\s(.*)/g,
-  matchOrderList = /^\s*(\d)\./,
+  matchOrderList = /^\s*(\d+)\./,
   matchSuperLink = /\[(.*)\]\((.*)\)/,
   matchImage = /!\[(.*)\]\((.*)\)/;
 
-export function processForamt(list: string[]) {
+export function processFormat(list: string[]) {
   // 多个换行合并为一个
   if (/^\s+/.test(list[0])) {
     list[0] = list[0].replace(/^(\s+)/g, ($1) => "\n");
@@ -57,7 +57,7 @@ export function isPreCode(s: string) {
 }
 
 export function isBLock(s: string) {
-  return s.startsWith("> ");
+  return /^>/.test(s.trim());
 }
 
 export function isNeedEndChar(i: number, n: number, ch: string) {
@@ -135,7 +135,7 @@ export function isTable(s: string) {
 }
 
 export function native(s: string) {
-  return s.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  return s.replace(/</g, "&lt;")
 }
 
 export function isMultColumnStart(s: string) {
