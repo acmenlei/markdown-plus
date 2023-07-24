@@ -49,7 +49,8 @@ function genListHelper(list: string[]) {
     }
     const listItem: IListItem = {
       children: [],
-      value: list[i].slice(level + 2),
+      // 空格数量 + 序号字符串本身 + '.' = 起始切割位置
+      value: list[i].slice(level + RegExp.$1.length + 1),
       level,
       parent: null,
     };
