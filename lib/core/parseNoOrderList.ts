@@ -25,10 +25,11 @@ export function parseNoOrderList(templates: TemplateList, i: number, templateLen
 }
 
 function processNoOrderList(template: string) {
-  const list: Array<string> | null = template.match(/(\s?)+-\s(.*)/g)
+  const list: Array<string> | null = template.match(/(\s?)*-\s(.+)/g)
   if (!list) {
     return template;
   }
+  console.log(list)
   processFormat(list)
   const nodes = genListHelper(list);
   const root = genTemplateStringOfNodes(nodes, false);
@@ -39,9 +40,9 @@ function genListHelper(list: string[]) {
   const results: IListItem[] = [], currentOperStack: IListItem[] = [], n = list.length;
 
   for (let i = 0; i < n; i++) {
-    const level = list[i].indexOf("-")
-    const listItem: IListItem = { children: [], value: list[i].slice(level + 1), level, parent: null }
-
+    const level = list[i].indexOf("- ")
+    const listItem: IListItem = { children: [], value: list[i].slice(level + 2), level, parent: null }
+    console.log(listItem)
     if (!currentOperStack.length) {
       results.push(listItem);
       currentOperStack.push(listItem);

@@ -2,7 +2,7 @@ import { type IListItem } from "../lib/core/parseNoOrderList";
 import { parseNormalText } from "../lib/core/parseText";
 // 正则
 export const matchTitle: RegExp = /(#+)\s(.*)/g,
-  matchOrderList = /^\s*(\d+)\./,
+  matchOrderList = /^\s*(\d+)\.\s(.+)/,
   matchSuperLink = /\[(.*)\]\((.*)\)/,
   matchImage = /!\[(.*)\]\((.*)\)/;
 
@@ -36,7 +36,8 @@ export function isOrderList(s: string) {
 }
 
 export function isNoOrderList(s: string) {
-  let idx = s.indexOf("-");
+  let idx = s.indexOf("- ");
+  console.log(s, idx )
   return idx == 0 || (idx != -1 && !s.slice(0, idx).trim());
 }
 

@@ -28,7 +28,7 @@ export function parseOrderList(
 }
 
 export function processOrderList(template: string) {
-  const list: Array<string> | null = template.match(/\s*\d+\.(.*)/g);
+  const list: Array<string> | null = template.match(/\s*\d+\.\s(.+)/g);
   if (!list) {
     return template;
   }
@@ -50,7 +50,7 @@ function genListHelper(list: string[]) {
     const listItem: IListItem = {
       children: [],
       // 空格数量 + 序号字符串本身 + '.' = 起始切割位置
-      value: list[i].slice(level + RegExp.$1.length + 1),
+      value: RegExp.$2,
       level,
       parent: null,
     };
