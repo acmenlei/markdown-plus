@@ -37,7 +37,6 @@ export function isOrderList(s: string) {
 
 export function isNoOrderList(s: string) {
   let idx = s.indexOf("- ");
-  console.log(s, idx )
   return idx == 0 || (idx != -1 && !s.slice(0, idx).trim());
 }
 
