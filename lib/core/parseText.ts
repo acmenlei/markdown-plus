@@ -11,7 +11,7 @@ export function parseNormalText(text: string, inner: boolean = false) {
   result = parseImage(result);
   result = parseSuperLink(result);
   result = parseIcon(result);
-  return result;
+  return inner ? result : `<p>${result}</p>`;
 }
 
 function processStrongText(text: string) {
