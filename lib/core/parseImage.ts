@@ -13,7 +13,7 @@ export function parseImage(s: string) {
     let linkEnd = s.indexOf(")");
     let link = s.slice(0, linkEnd);
     s = s.slice(linkEnd + 1);
-    result += `<p><img alt=${alt} src=${link} /></p>`;
+    result += `<img alt=${alt} src=${link} />`;
   }
   return result + s;
 }
