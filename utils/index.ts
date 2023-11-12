@@ -21,14 +21,16 @@ export function genTemplateStringOfNodes(nodes: IListItem[], isOrder: boolean) {
   let listString = "";
   for (let node of nodes) {
     let childrenString = node.children.length
-      ? genTemplateStringOfNodes(node.children, isOrder)
+      ? genTemplateStringOfNodes(node.children, node.isOrder)
       : "";
     listString += `<li>${parseNormalText(
       node.value + childrenString,
       true
     )}</li>`;
   }
-  return `<${isOrder ? "ol" : "ul"}>${listString}</${isOrder ? "ol" : "ul"}>`;
+  // 是否为嵌套行为
+  let s = `<${isOrder ? "ol" : "ul"}>${listString}</${isOrder ? "ol" : "ul"}>`;
+  return s;
 }
 
 export function isOrderList(s: string) {
@@ -135,7 +137,7 @@ export function isTable(s: string) {
 }
 
 export function native(s: string) {
-  return s.replace(/</g, "&lt;")
+  return s.replace(/</g, "&lt;");
 }
 
 export function isMultColumnStart(s: string) {
@@ -147,7 +149,7 @@ export function isMultColumnEnd(s: string) {
 }
 
 export function isMultColumn(s: string) {
-  return s.trim() === ':::';
+  return s.trim() === ":::";
 }
 
 export function isHeadLayoutStart(s: string) {
@@ -155,13 +157,13 @@ export function isHeadLayoutStart(s: string) {
 }
 
 export function isHeadLayoutEnd(s: string) {
-  return s.trim() === "::: headEnd"
+  return s.trim() === "::: headEnd";
 }
 
 export function isMainLayoutStart(s: string) {
-  return s.trim() === "::: mainStart"
+  return s.trim() === "::: mainStart";
 }
 
 export function isMainLayoutEnd(s: string) {
-  return s.trim() === "::: mainEnd"
+  return s.trim() === "::: mainEnd";
 }

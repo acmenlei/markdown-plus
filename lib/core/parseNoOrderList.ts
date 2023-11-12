@@ -1,4 +1,4 @@
-import { genTemplateStringOfNodes, processFormat } from "../../utils/index";
+import { genTemplateStringOfNodes, isNoOrderList, isOrderList, processFormat } from "../../utils/index";
 import { TemplateList } from "./parseToHTML";
 
 export interface IListItem {
@@ -6,6 +6,7 @@ export interface IListItem {
   children: Array<IListItem>;
   level: number;
   parent: IListItem | null;
+  isOrder: boolean
 }
 
 export function parseNoOrderList(templates: TemplateList, i: number, templateLength: number) {
@@ -14,7 +15,7 @@ export function parseNoOrderList(templates: TemplateList, i: number, templateLen
     if (!templates[i].trim()) {
       continue;
     }
-    if (templates[i].trim()[0] === '-' && templates[i].indexOf("-") != -1) {
+    if (isOrderList(templates[i]) || isNoOrderList(templates[i])) {
       result += templates[i] + '\n';
     } else {
       break;
@@ -25,7 +26,7 @@ export function parseNoOrderList(templates: TemplateList, i: number, templateLen
 }
 
 function processNoOrderList(template: string) {
-  const list: Array<string> | null = template.match(/(\s?)*-\s(.+)/g)
+  const list: Array<string> | null = template.match(/(\s?)*(-|\d+\.)\s(.+)/g)
   if (!list) {
     return template;
   }
@@ -39,15 +40,23 @@ function genListHelper(list: string[]) {
   const results: IListItem[] = [], currentOperStack: IListItem[] = [], n = list.length;
 
   for (let i = 0; i < n; i++) {
-    const level = list[i].indexOf("- ")
-    const listItem: IListItem = { children: [], value: list[i].slice(level + 2), level, parent: null }
+    let level = list[i].indexOf("- "), isOrder = false
+    if (isOrderList(list[i])) {
+      level = list[i].indexOf(String(RegExp.$1 + "."));
+      // console.log(level)
+      isOrder = true
+    }
+    const listItem: IListItem = { children: [], value: list[i].slice(level + 2), level, parent: null, isOrder }
     if (!currentOperStack.length) {
       results.push(listItem);
       currentOperStack.push(listItem);
       continue;
     }
     const topLevel = currentOperStack[currentOperStack.length - 1].level;
-    const curLevel = list[i].indexOf("-");
+    let curLevel = list[i].indexOf("-");
+    if (isOrderList(list[i])) {
+      curLevel = list[i].indexOf(String(RegExp.$1 + "."));
+    }
     let parent: IListItem | null;
 
     if (topLevel === curLevel) {

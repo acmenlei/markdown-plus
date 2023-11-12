@@ -43,15 +43,17 @@ function genListHelper(list: string[]) {
     currentOperStack: IListItem[] = [],
     n = list.length;
   for (let i = 0; i < n; i++) {
-    let level = 0;
+    let level = 0, isOrder = false;
     if (isOrderList(list[i])) {
       level = list[i].indexOf(String(RegExp.$1 + "."));
+      isOrder = true
     }
     const listItem: IListItem = {
       children: [],
       // 空格数量 + 序号字符串本身 + '.' = 起始切割位置
       value: RegExp.$2,
       level,
+      isOrder,
       parent: null,
     };
     if (!currentOperStack.length) {
