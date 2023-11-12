@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <style>
+  <!-- <style>
     .markdown-transform-html {
       padding: 0;
       position: relative;
@@ -78,7 +78,7 @@
     b {
       font-size: 1rem;
     }
-  </style>
+  </style> -->
 </head>
 
 <body>
@@ -87,11 +87,21 @@
 
     import { markdownToHTML } from "./index.ts"
     const result = markdownToHTML(`
-      - 我是第一位
-        1. 我是第二
-        2. 我是第三
-        3. 我是第四
-        4. 我是第五
+## dsadsa
+- 我是第一
+- 我是第二
+- 我是第三
+1. 有序一
+  2. 有序**二**
+  3. 有序三
+  4. 有序一
+  5. 有序二
+- 我是第一
+  1. 有序一
+  - 我是第一
+1. 有序1
+2. 有序2
+2019.09 - 2022.08
  `)
 
     document.body.innerHTML = result

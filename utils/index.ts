@@ -1,4 +1,4 @@
-import { type IListItem } from "../lib/core/parseNoOrderList";
+import { type IListItem } from "../lib/core/parseListItem";
 import { parseNormalText } from "../lib/core/parseText";
 // 正则
 export const matchTitle: RegExp = /(#+)\s(.*)/g,
@@ -17,20 +17,37 @@ export function processFormat(list: string[]) {
   }
 }
 // 有序列表无序列表的生成
-export function genTemplateStringOfNodes(nodes: IListItem[], isOrder: boolean) {
-  let listString = "";
-  for (let node of nodes) {
-    let childrenString = node.children.length
-      ? genTemplateStringOfNodes(node.children, node.isOrder)
-      : "";
-    listString += `<li>${parseNormalText(
-      node.value + childrenString,
+function processListItem(nodes: IListItem[], order: boolean) {
+  let s = order ? "<ol>" : "<ul>";
+  for (const node of nodes) {
+    s += `<li>${parseNormalText(
+      node.content + genTemplateStringOfNodes(node.children),
       true
     )}</li>`;
   }
-  // 是否为嵌套行为
-  let s = `<${isOrder ? "ol" : "ul"}>${listString}</${isOrder ? "ol" : "ul"}>`;
+  s += order ? "</ol>" : "</ul>";
   return s;
+}
+export function genTemplateStringOfNodes(nodes: IListItem[]) {
+  let s = "",
+    i = 0,
+    n = nodes.length;
+  if (n === 0) return "";
+  while (i < n) {
+    const order_list = [],
+      no_order_list = [];
+    while (i < n && nodes[i].type === "no_order") {
+      no_order_list.push(nodes[i]);
+      i++;
+    }
+    s += processListItem(no_order_list, false);
+    while (i < n && nodes[i].type === "order") {
+      order_list.push(nodes[i]);
+      i++;
+    }
+    s += processListItem(order_list, true);
+  }
+  return s.replace(/<ul><\/ul>/, "").replace(/<ol><\/ol>/, "");
 }
 
 export function isOrderList(s: string) {
@@ -141,11 +158,11 @@ export function native(s: string) {
 }
 
 export function isMultColumnStart(s: string) {
-  return s.trim() === "::: start";
+  return s.trim() === "::: start" || s.trim() === ":::start";
 }
 
 export function isMultColumnEnd(s: string) {
-  return s.trim() === "::: end";
+  return s.trim() === "::: end" || s.trim() === ":::end";
 }
 
 export function isMultColumn(s: string) {
@@ -153,17 +170,17 @@ export function isMultColumn(s: string) {
 }
 
 export function isHeadLayoutStart(s: string) {
-  return s.trim() === "::: headStart";
+  return s.trim() === "::: headStart" || s.trim() === ":::headStart";
 }
 
 export function isHeadLayoutEnd(s: string) {
-  return s.trim() === "::: headEnd";
+  return s.trim() === "::: headEnd" || s.trim() === ":::headEnd";
 }
 
 export function isMainLayoutStart(s: string) {
-  return s.trim() === "::: mainStart";
+  return s.trim() === "::: mainStart" || s.trim() === ":::mainStart";
 }
 
 export function isMainLayoutEnd(s: string) {
-  return s.trim() === "::: mainEnd";
+  return s.trim() === "::: mainEnd" || s.trim() === ":::mainEnd";
 }

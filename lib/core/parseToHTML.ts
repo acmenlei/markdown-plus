@@ -8,8 +8,6 @@ import {
 } from "../../utils/index";
 import { parseBlock } from "./parseBlock";
 import { parseCode } from "./parseCode";
-import { parseNoOrderList } from "./parseNoOrderList";
-import { parseOrderList } from "./parseOrderList";
 import { parseHorizontalLine } from "./parseHorLine";
 import { parseNormalText } from "./parseText";
 import { parseTitle } from "./parseTitle";
@@ -24,6 +22,7 @@ import { parseTable } from "./parseTable";
 import parseLayout from "./parseLayout";
 import parseHeadLayout from "./parseHeadLayout";
 import parseMainLayout from "./parseMainLayout";
+import { parseListItem } from "./parseListItem";
 
 export type TemplateList = string[];
 export type TemplateStr = string;
@@ -75,16 +74,11 @@ export function markdownToHTML(template: string, options?: ITransformOptions) {
       i = startIdx;
       // 将解析得到的结果进行拼接
       templateStr += result;
-    } else if (isNoOrderList(templates[i])) {
+    } else if (isNoOrderList(templates[i]) || isOrderList(templates[i])) {
       // 说明为无序列表
-      const { result, startIdx } = parseNoOrderList(templates, i, len);
+      const { result, startIdx } = parseListItem(templates, i, len);
       // 这里进入了当前分支 下面就不会走了 防止这个选项漏掉 那么我们需要回退一步 下面处理有序列表也是一样的
       // （分支处理结构引出的问题）
-      i = startIdx - 1;
-      templateStr += result;
-    } else if (isOrderList(templates[i])) {
-      // 说明为有序列表
-      const { result, startIdx } = parseOrderList(templates, i, len);
       i = startIdx - 1;
       templateStr += result;
     } else if (isPreCode(templates[i])) {
