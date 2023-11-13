@@ -32,7 +32,7 @@ function processTableTHead(s: string) {
       isValidedSplitChar(s, i + 1)
     ) {
       if (preIdx != -1) {
-        template += `<th>${s.slice(preIdx + 1, i)}</th>`;
+        template += `<th>${parseNormalText(s.slice(preIdx + 1, i))}</th>`;
       }
       preIdx = i;
     }
