@@ -6,79 +6,6 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <!-- <style>
-    .markdown-transform-html {
-      padding: 0;
-      position: relative;
-      min-height: 297mm !important;
-    }
-
-    .markdown-transform-html::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 280px;
-      height: 100%;
-      background: var(--markdown-primary-bg-color);
-    }
-
-    .iconfont {
-      margin-right: 5px;
-      font-size: 1.2rem;
-    }
-
-    .flex-layout {
-      justify-content: space-evenly;
-      margin: 0;
-    }
-
-    .flex-layout:first-of-type {
-      align-items: flex-start;
-
-    }
-
-    img {
-      margin-left: 50%;
-      transform: translateX(-50%);
-    }
-
-    .head-layout {
-      color: white;
-      position: relative;
-      padding: 10px 10px 10px 30px;
-
-
-
-
-    }
-
-    h2 {
-      color: inherit;
-      margin-top: 20px;
-      text-align: center;
-    }
-
-    h3 {
-      margin-top: 30px;
-    }
-
-    ul,
-    ol {
-      padding-left: 20px;
-      margin-top: 5px;
-    }
-
-    p,
-    li {
-      margin-top: 5px;
-    }
-
-    strong,
-    b {
-      font-size: 1rem;
-    }
-  </style> -->
 </head>
 
 <body>
@@ -101,7 +28,11 @@
   - 我是第一
 1. 有序1
 2. 有序2
-2019.09 - 2022.08
+| property name        | type    | default value | meaning |
+| -------------------- | ------- | ------------- | ------- |
+| lineNumber | Boolean  | false | If you need line numbers, turn this option on |
+| highlight      | Boolean  | false          | If you need to highlight code in markdown, turn this option on |
+| xss      | Boolean  | true          | To prevent users from xss attacks on your application, xss is used by default. If you want to turn it off, you can set it to false |
  `)
 
     document.body.innerHTML = result
