@@ -1,7 +1,7 @@
 import { type IListItem } from "../lib/core/parseNoOrderList";
 import { parseNormalText } from "../lib/core/parseText";
 // 正则
-export const matchTitle: RegExp = /(#+)\s(.*)/g,
+export const matchTitle: RegExp = /^(#+)\s(.*)/g,
   matchOrderList = /^\s*(\d+)\.\s(.+)/,
   matchSuperLink = /\[(.*)\]\((.*)\)/,
   matchImage = /!\[(.*)\]\((.*)\)/;
@@ -41,7 +41,7 @@ export function isNoOrderList(s: string) {
 }
 
 export function isTitle(s: string) {
-  return s.indexOf("#") != -1;
+  return s.trimStart()[0] === "#";
 }
 
 export function isImage(s: string) {
