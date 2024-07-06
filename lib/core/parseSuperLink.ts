@@ -13,7 +13,7 @@ export function parseSuperLink(s: string) {
     let linkEnd = s.indexOf(")");
     let link = s.slice(0, linkEnd);
     s = s.slice(linkEnd + 1);
-    result += `<a href=${link} target="_blank">${alt}</a>`;
+    result += `<a target="_blank" href=${link}>${alt}</a>`;
   }
   return result + s;
 }
