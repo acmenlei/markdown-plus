@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script type="module">
+
+    import { markdownToHTML } from "./index.ts"
+    const result = markdownToHTML(`
+## dsadsa
+1 ## dsadadas
+dsadsdas
+\`c#\` 
+dsadadsadsasddsadasdsadsadasd
+![220x220.jpg](https://p6-passport.byteacctimg.com/img/user-avatar/c14820a61bf5ebd104ea61ad17f5a552~130x130.awebp)
+- 我是第一
+- 我是第二
+- 我是第三
+1. 有序一
+  2. 有序**二**
+  3. 有序三
+  4. 有序一
+  5. 有序二
+- 我是第一
+  1. 有序一
+  - 我是第一
+1. 有序1
+2. 有序2
+| property name        | type    | default value | meaning |
+| -------------------- | ------- | ------------- | ------- |
+| lineNumber | Boolean  | false | If you need line numbers, turn this option on |
+| highlight      | Boolean  | false          | If you need to highlight code in markdown, turn this option on |
+| xss      | Boolean  | true          | To prevent users from xss attacks on your application, xss is used by default. If you want to turn it off, you can set it to false |
+ `)
+
+    document.body.innerHTML = result
+  </script>
+</body>
+
+</html>

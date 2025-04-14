@@ -1,0 +1,41 @@
+.markdown-transform-html blockquote {
+  background: #eee;
+  position: relative;
+  margin: 0;
+  padding: 10px 10px 10px 30px;
+}
+
+.markdown-transform-html blockquote::before {
+  position: absolute;
+  content: "";
+  display: block;
+  width: 8px;
+  background: #ccc;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+
+.markdown-transform-html h1, .markdown-transform-html h2 {
+  border-bottom: 2px solid #eee;
+  padding-bottom: 5px;
+}
+
+
+.markdown-transform-html table tbody td:nth-child(1) {
+  border-left: 1px solid #eee;
+}
+
+.markdown-transform-html table thead {
+  background-color: rgb(217, 223, 231);
+}
+
+.markdown-transform-html table thead th,
+.markdown-transform-html table tbody td {
+  padding: 10px;
+}
+
+.markdown-transform-html table tbody td {
+  border-right: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
