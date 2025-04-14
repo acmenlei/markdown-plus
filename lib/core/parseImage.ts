@@ -11,14 +11,14 @@ export function parseImage(s: string) {
     let alt = s.slice(0, altEndIdx);
 
     // 匹配alt中的\d*x\d*宽高px
-    const width = alt.match(/\d*x\d*/);
-    const [w, h] = width?.[0].split('x') ?? [];
+    const width = alt.match(/\((\d*x\d*)\)/);
+    const [w, h] = width?.[width?.length - 1].split('x') ?? [];
     s = s.slice(altEndIdx + 2);
     let linkEnd = s.indexOf(")");
     let link = s.slice(0, linkEnd);
     s = s.slice(linkEnd + 1);
     if(w && h) {
-      result += `<img alt="${alt}" src=${link} width="${w}" height="${h}" />`;
+      result += `<img alt="${alt}" src=${link} style="width: ${w}px; height: ${h}px;" />`;
     } else {
       result += `<img alt="${alt}" src=${link} />`;
     }
