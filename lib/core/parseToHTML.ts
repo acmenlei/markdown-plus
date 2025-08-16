@@ -5,6 +5,7 @@ import {
   native,
   isHorizontalLine,
   isMainLayoutStart,
+  svgLoaderManager,
 } from "../../utils/index";
 import { parseBlock } from "./parseBlock";
 import { parseCode } from "./parseCode";
@@ -30,17 +31,32 @@ export interface ITransformOptions {
   lineNumber?: boolean;
   highlight?: boolean;
   xss?: boolean;
+  svgMap?: Record<string, string>;
 }
 
 const defaultOptions: ITransformOptions = {
   lineNumber: false,
   highlight: false,
   xss: true, // 默认进行xss处理
+  svgMap: {},
 };
-export function markdownToHTML(template: string, options?: ITransformOptions) {
+
+/**
+ * 将markdown转换为html
+ * @param template 
+ * @param options 
+ * @returns 
+ */
+export function markdownToHTML(template: string, options?: ITransformOptions): string {
   let op = options || defaultOptions,
     templateStr: TemplateStr = "";
   op = Object.assign({ ...defaultOptions }, op);
+  
+  // 设置SVG映射数据
+  if (op.svgMap) {
+    svgLoaderManager.setSvgMap(op.svgMap);
+  }
+  
   let templates: TemplateList = op.xss
       ? native(template).split("\n")
       : template.split("\n"),

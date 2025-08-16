@@ -184,3 +184,6 @@ export function isMainLayoutStart(s: string) {
 export function isMainLayoutEnd(s: string) {
   return s.trim() === "::: mainEnd" || s.trim() === ":::mainEnd";
 }
+
+// 导出SVG加载器管理器
+export { svgLoaderManager } from './svgLoader';
